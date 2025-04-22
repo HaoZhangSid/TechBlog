@@ -1,28 +1,22 @@
-# Project Requirements
+# Project Specifications
 
 ## Backend Basic
 
 *   [ ] Express.js server with routes for public pages, admin dashboard, and authentication.
-*   [ ] Static file serving for public assets (CSS, JS).
+*   [ ] Static file for public assets (CSS, JS).
 
 ## Database
 
 *   [ ] Use MongoDB Atlas with Mongoose for data storage.
 *   [ ] Models: Post (title, content, author, date) and User (username, email, password).
 
-## CRUD API
-
-*   [ ] RESTful API (/api/posts, /api/posts/:id) supporting GET (list, single), POST (create), PUT (update), DELETE (delete).
-*   [ ] Protect write operations (POST, PUT, DELETE) with authentication.
-*   [ ] Validate input data using express-validator.
-
 ## Frontend
 
 ### Templates
 
-*   [ ] Public Pages: Homepage (list of posts), post details page (single post), about page (static content), error page.
+*   [ ] Public Pages: Homepage (list of posts), post details page (single post), about page (static content) and error page.
 *   [ ] Admin Pages: Admin dashboard, post list, post creation/edit form.
-*   [ ] Authentication Pages: Login/registration form, forgot password, reset password.
+*   [ ] Authentication Pages: Login, forgot password, reset password form.
 *   [ ] Layouts: Public layout, admin layout.
 
 ### Styling
@@ -40,35 +34,39 @@
 
 *   [ ] Mobile menu toggle, user dropdown, and auto-hiding flash messages.
 
+## CRUD API
+
+*   [ ] RESTful API to create, read (list, single), update, delete posts.
+*   [ ] Use authentication to protect write operations (post, put, delete).
+*   [ ] Use express-validator to verify input data.
+
 ## Authentication
 
 *   [ ] Passport.js Local Strategy for secure login, registration, logout, forgot password, and reset password.
-*   [ ] Flash messages for user feedback (e.g., login errors, post creation success).
 *   [ ] Use bcryptjs for password hashing.
 *   [ ] Protect admin routes and API write operations with ensureAuthenticated middleware. (Optional)
 
+## Validation of Input Using Express-validator
+
+*   [ ] Creation/editing of posts (title, text).
+*   [ ] Reset password (new one, confirmation).
+
 ## Email Notifications with Nodemailer
-*   [ ] Password reset email with a token link.
-
-## Input Validation with Express-validator
-
-*   [ ] Post creation/edit (title, content).
-*   [ ] User registration (username, email, password).
-*   [ ] Password reset (new password, confirmation).
+*   [ ] An email containing a token link for a password reset.
 
 ## Deployment
 
 *   [ ] Deploy to Azure App Service with MongoDB Atlas integration.
-*   [ ] Configure production environment variables via Azure.
+*   [ ] Set up production environment variables via Azure.
 *   [ ] Continuous deployment from GitHub.
 
 ## Accessibility Compliance with WCAG 2.1 Level AA
 
 *   [ ] 4.5:1 color contrast ratio.
-*   [ ] Semantic HTML (e.g., <nav>, <article>).
-*   [ ] ARIA attributes (e.g., aria-label, aria-describedby).
-*   [ ] Keyboard navigation for all interactive elements.
-*   [ ] Screen reader compatibility (tested with NVDA, VoiceOver).
-*   [ ] Accessible Markdown-rendered content.
+*   [ ] Semantic HTML (e.g., nav, article).
+*   [ ] ARIA properties such as aria-label, aria-describedby.
+*   [ ] All interactive elements can be navigated using the keyboard.
+*   [ ] Compatibility with screen reader (tested with NVDA, VoiceOver).
+*   [ ] Markdown-rendered content is accessible.
 
 ---
