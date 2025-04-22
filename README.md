@@ -1,25 +1,25 @@
 # Tech Blog Project
-This project is a simple tech blog platform built using Node.js, Express, Handlebars, and MongoDB. It features user authentication (login, password reset), post management (CRUD operations), and a public-facing blog interface.
+This project is a straightforward tech blog platform that was constructed with MongoDB, Handlebars, Express, and Node.js.  It has a blog interface that is visible to the public, post management (CRUD operations), and user authentication (login, password reset).
 
-## Features We Plan To Include
+## Features That We Incorporate
 
-*   Public blog view (posts, comments)
-*   User authentication (login, logout)
-*   Password reset functionality (forgot password, reset link via email)
-*   Admin dashboard (protected)
-*   Post management (Create, Read, Update, Delete - currently using sample data)
-*   Comment submission (currently redirects without saving)
-*   Markdown support for post content with server-side rendering
+*   View of the public blog (posts, comments)
+*   Authentication of users (login, logout)
+*   Features for changing a password (forgot password, reset link via email)
+*   Administrator dashboard (secured)
+*   Post management (Create, Read, Update, Delete)
+*   Submission of comments (optional)
+*   Support for markdown for server-side rendering of post content
 *   Syntax highlighting for code blocks
-*   TailwindCSS for styling
-*   Responsive design
+*   Use TailwindCSS for styling
+*   Design that is responsive
 
-## Tech Stack To Be Used
+## Utilizing Tech Stack
 
-*   **Backend:** Node.js, Express.js
-*   **Templating:** Handlebars.js (`express-handlebars`)
+*   **Backend:** Node.js and Express.js
+*   Handlebars.js (`express-handlebars`) to be used for template creation.
 *   **Database:** MongoDB
-*   **Authentication:** Passport.js (Local Strategy)
-*   **Styling:** TailwindCSS (with PostCSS)
-*   **Email Sending:** Nodemailer (for password reset)
-*   **Validation:** `express-validator`
+*   Passport.js (Local Strategy) for authentication.
+*   TailwindCSS (with PostCSS) to be used for styling.
+*   Nodemailer to be used to send emails for password reset.
+*   `Express-validator` to be used for validation.
