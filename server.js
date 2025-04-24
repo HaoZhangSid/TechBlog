@@ -2,10 +2,15 @@ require('dotenv').config();
 const express = require('express');
 const session = require('express-session'); // Import express-session
 const MongoStore = require('connect-mongo'); // Import connect-mongo
+const passport = require('passport'); // Import passport
 const connectDB = require('./config/db'); // Import connectDB
+const configurePassport = require('./config/passport'); // Import passport config
 
 // Connect to database
 connectDB();
+
+// Configure Passport Strategy
+configurePassport(passport);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -30,9 +35,16 @@ app.use(session({
   }
 }));
 
+// Passport Middleware (Initialize Passport and enable session support)
+// IMPORTANT: Must be placed AFTER express-session middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // Basic route for testing
 app.get('/', (req, res) => {
-  res.send('Server is running! Session configured.');
+  // Check if user is authenticated (will be undefined until login)
+  console.log('User on / route:', req.user);
+  res.send('Server is running! Session and Passport configured.');
 });
 
 app.listen(PORT, () => {
