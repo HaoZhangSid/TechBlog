@@ -7,7 +7,8 @@
     "start": "node server.js",
     "dev": "concurrently \"npm run watch:css\" \"nodemon server.js\"",
     "build:css": "postcss src/css/tailwind.css -o public/css/styles.css --minify",
-    "watch:css": "postcss src/css/tailwind.css -o public/css/styles.css --watch"
+    "watch:css": "postcss src/css/tailwind.css -o public/css/styles.css --watch",
+    "init-admin": "node utils/initAdmin.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
