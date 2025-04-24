@@ -1,0 +1,199 @@
+<!-- Universal Header Component -->
+<!-- Skip to main content link for keyboard users -->
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-cyan-600 text-white px-4 py-2 rounded-md z-50">
+  Skip to main content
+</a>
+
+{{#if isAdminPage}}
+<!-- Admin Header - Dark Theme -->
+<header class="bg-gray-800 border-b border-gray-700 h-16 flex items-center" role="banner">
+  <div class="container mx-auto px-4 flex items-center justify-between h-full">
+    <!-- Logo and main nav -->
+    <div class="flex items-center space-x-8 h-full">
+      <a href="/" class="text-2xl font-bold text-white hover:text-gray-200 transition-colors flex items-center min-h-[44px]">
+        Tech<span class="text-cyan-500">Blog</span>
+      </a>
+      
+      <nav aria-label="Admin navigation" class="hidden md:block h-full">
+        <ul class="flex space-x-6 h-full">
+          <li class="flex items-center">
+            <a href="/admin/dashboard" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isDashboardPage}}page{{/if}}">Dashboard</a>
+          </li>
+          <li class="flex items-center">
+            <a href="/admin/posts" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isPostsPage}}page{{/if}}">Posts</a>
+          </li>
+          <li class="flex items-center">
+            <a href="/" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">View Site</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    
+    <!-- User menu -->
+    <div class="flex items-center h-full">
+      <!-- Mobile menu toggle -->
+      <button 
+        type="button" 
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        class="md:hidden min-h-[44px] min-w-[44px] p-2 rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+        <span class="sr-only">Open main menu</span>
+        <!-- Icon when menu is closed -->
+        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <!-- Icon when menu is open -->
+        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+      
+      <!-- User profile dropdown -->
+      <div class="relative h-full flex items-center" id="user-menu">
+        <button class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md px-3 py-2 min-h-[44px] min-w-[44px]" id="user-menu-button" aria-haspopup="true" aria-expanded="false">
+          <div class="w-8 h-8 rounded-full bg-cyan-600 flex items-center justify-center text-white font-medium">
+            {{#if user}}
+              {{user.initials}} {{!-- Assuming user object has initials --}}
+            {{else}}
+              AU {{!-- Anonymous User / Admin User placeholder --}}
+            {{/if}}
+          </div>
+          <span class="text-gray-300 hidden sm:inline">
+            {{#if user}}
+              {{user.name}} {{!-- Assuming user object has name --}}
+            {{else}}
+              Admin
+            {{/if}}
+          </span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+        
+        <!-- Dropdown menu -->
+        <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg py-1 z-10 hidden" id="user-dropdown-menu" style="top: 100%;"> {{!-- Position dropdown below button --}}
+          <form action="/logout" method="POST" class="block">
+            <button type="submit" class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors min-h-[44px]">
+              Sign out
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile menu (hidden by default) -->
+<div class="md:hidden bg-gray-800 border-b border-gray-700 hidden" id="mobile-menu">
+  <div class="container mx-auto px-4 py-3 space-y-1">
+    <a href="/admin/dashboard" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+      Dashboard
+    </a>
+    <a href="/admin/posts" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+      Posts
+    </a>
+    <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+      View Site
+    </a>
+  </div>
+</div>
+{{else}}
+<!-- Regular User Header -->
+<header class="bg-gray-800 border-b border-gray-700 h-16 flex items-center" role="banner">
+  <div class="container mx-auto px-4 flex items-center justify-between h-full">
+    <a href="/" class="text-2xl font-bold text-white hover:text-gray-200 transition-colors flex items-center min-h-[44px]">
+      Tech<span class="text-cyan-500">Blog</span>
+    </a>
+    
+    <nav aria-label="Main navigation" class="h-full">
+      <ul class="flex space-x-6 h-full">
+        <li class="flex items-center">
+          <a href="/" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isHomePage}}page{{/if}}">Home</a>
+        </li>
+        <li class="flex items-center">
+          <a href="/about" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isAboutPage}}page{{/if}}">About</a>
+        </li>
+        {{#if user}}
+          <li class="flex items-center">
+            <a href="/admin/dashboard" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">Dashboard</a>
+          </li>
+          {{!-- Add logout button/link for logged-in users --}}
+          <li class="flex items-center">
+            <form action="/logout" method="POST" class="h-full">
+              <button type="submit" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md h-full">
+                Logout
+              </button>
+            </form>
+          </li>
+        {{else}}
+          <li class="flex items-center">
+            <a href="/login" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">Login</a>
+          </li>
+        {{/if}}
+      </ul>
+    </nav>
+  </div>
+</header>
+{{/if}}
+
+<!-- Script for mobile menu toggle and user dropdown -->
+{{#if isAdminPage}}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle
+    const mobileMenuButton = document.querySelector('[aria-controls="mobile-menu"]');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (mobileMenuButton && mobileMenu) {
+      mobileMenuButton.addEventListener('click', function() {
+        const expanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !expanded);
+        mobileMenu.classList.toggle('hidden');
+        
+        // Toggle the menu icons
+        const openIcon = this.querySelector('svg.block');
+        const closeIcon = this.querySelector('svg.hidden');
+        if (openIcon && closeIcon) {
+          openIcon.classList.toggle('block');
+          openIcon.classList.toggle('hidden');
+          closeIcon.classList.toggle('block');
+          closeIcon.classList.toggle('hidden');
+        }
+      });
+    }
+
+    // User dropdown menu
+    const userMenuButton = document.getElementById('user-menu-button');
+    const userDropdownMenu = document.getElementById('user-dropdown-menu');
+    const userMenu = document.getElementById('user-menu');
+    
+    if (userMenuButton && userDropdownMenu && userMenu) { // Check userMenu exists
+      let isOpen = false;
+      
+      userMenuButton.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent click from bubbling to document
+        isOpen = !isOpen;
+        if (isOpen) {
+          userDropdownMenu.classList.remove('hidden');
+          this.setAttribute('aria-expanded', 'true');
+        } else {
+          userDropdownMenu.classList.add('hidden');
+          this.setAttribute('aria-expanded', 'false');
+        }
+      });
+      
+      // Close dropdown menu when clicking outside
+      document.addEventListener('click', function(event) {
+        if (isOpen && userMenu && !userMenu.contains(event.target)) { // Check userMenu exists
+          userDropdownMenu.classList.add('hidden');
+          userMenuButton.setAttribute('aria-expanded', 'false');
+          isOpen = false;
+        }
+      });
+      
+      // Removed hover logic for simplicity and better accessibility
+      // Focus management can be added later if needed
+    }
+  });
+</script>
+{{/if}} 

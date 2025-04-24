@@ -6,6 +6,7 @@ const passport = require('passport'); // Import passport
 const connectDB = require('./config/db'); // Import connectDB
 const configurePassport = require('./config/passport'); // Import passport config
 const flash = require('connect-flash'); // Import connect-flash
+const configureHandlebars = require('./config/handlebars'); // Import Handlebars config
 
 // Connect to database
 connectDB();
@@ -15,6 +16,12 @@ configurePassport(passport);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Configure Handlebars as the view engine
+configureHandlebars(app);
+
+// Serve static files from the 'public' directory
+app.use(express.static('public'));
 
 // Middleware for parsing request bodies (place before session)
 app.use(express.urlencoded({ extended: true }));
@@ -59,13 +66,13 @@ const authRoutes = require('./routes/auth');
 // const adminRoutes = require('./routes/admin'); // Assuming admin routes will be created
 
 // Basic route for testing (can be removed or kept)
-app.get('/', (req, res) => {
-  console.log('User on / route:', req.user);
-  res.send('Server is running! Session and Passport configured.');
-});
+// app.get('/', (req, res) => {
+//   console.log('User on / route:', req.user);
+//   res.send('Server is running! Session and Passport configured.');
+// });
 
 // Mount Routes
-// app.use('/', indexRoutes);
+app.use('/', indexRoutes); // Mount index routes
 app.use('/', authRoutes); // Mount authentication routes
 // app.use('/admin', adminRoutes);
 
