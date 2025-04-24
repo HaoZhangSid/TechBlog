@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  {{!-- Placeholder for common head partial - we'll create this later --}}
+  {{!-- {{> common-head title=title description=description}} --}}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}} - Admin - My Blog</title> {{!-- Admin specific title --}}
+  <link rel="stylesheet" href="/css/styles.css"> {{!-- Link to compiled CSS --}}
+  <script>document.documentElement.classList.remove('no-js');</script> {{!-- Basic JS check --}}
+</head>
+<body class="bg-gray-900"> {{!-- Set dark background for admin area body --}}
+  {{!-- Include the universal header, ensuring the admin version is shown --}}
+  {{> header isAdminPage=true }} 
+
+  {{!-- Flash Messages --}}
+  {{#if success_msg}}
+    <div class="bg-green-900 text-green-100 px-4 py-3 shadow-md mb-4" role="alert" aria-live="polite">
+      <div class="container mx-auto">
+        <p>{{success_msg}}</p>
+      </div>
+    </div>
+  {{/if}}
+  
+  {{#if error_msg}}
+    <div class="bg-red-900 text-red-100 px-4 py-3 shadow-md mb-4" role="alert" aria-live="assertive">
+      <div class="container mx-auto">
+        <p>{{error_msg}}</p>
+      </div>
+    </div>
+  {{/if}}
+  {{#if error}} {{!-- Also check for passport 'error' key --}}
+    <div class="bg-red-900 text-red-100 px-4 py-3 shadow-md mb-4" role="alert" aria-live="assertive">
+      <div class="container mx-auto">
+        <p>{{error}}</p>
+      </div>
+    </div>
+  {{/if}}
+  
+  {{!-- Main Admin Content --}}
+  {{{body}}}
+  
+  {{!-- No footer for admin layout --}}
+
+  {{!-- Placeholder for common scripts partial - we'll create this later --}}
+  {{!-- {{> common-scripts}} --}}
+  
+  {{!-- Add any page-specific scripts here if needed --}}
+</body>
+</html> 
