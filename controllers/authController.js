@@ -1,36 +1,47 @@
-// controllers/authController.js
-
 // Display login page
 exports.getLoginPage = (req, res) => {
-  // Prevent logged-in users from seeing the login page
-  if (req.isAuthenticated()) {
-    console.log('Auth: User already authenticated, redirecting to /admin/dashboard');
-    return res.redirect('/admin/dashboard'); // Will create this route later
-  }
-  // We need the view engine configured first to actually render
-  // For now, just send a message or render will fail
-  // res.render('login', { title: 'Login' }); 
-  res.send('Login page placeholder - View engine needed'); 
-};
-
-// Handle logout POST request
-exports.postLogout = (req, res, next) => {
-  const userId = req.user ? req.user.id : 'unknown user';
-  req.logout(function(err) {
-    if (err) {
-      console.error(`Auth: Logout error for user ${userId}:`, err);
-      return next(err);
+    if (req.isAuthenticated()) {
+      console.log('User already authenticated, redirecting to dashboard.');
+      return res.redirect('/admin/dashboard');
     }
-    console.log(`Auth: User ${userId} logged out successfully.`);
-    req.flash('success_msg', 'You have been logged out.');
-    res.redirect('/login');
-  });
-};
-
-// Placeholder for postLogin - Logic is handled by passport.authenticate in the route
-exports.postLogin = (req, res) => {
-  // This function might not even be called if passport.authenticate handles redirection
-  // but it's good practice to have the controller function defined.
-  console.error("Auth: postLogin controller function reached unexpectedly.");
-  res.redirect('/'); // Fallback redirect
-}; 
+    res.render('login', {
+      title: 'Login',
+      description: 'Login to access the admin dashboard'
+    });
+  };
+  
+  // Handle login POST request
+  exports.postLogin = (req, res, next) => {
+    console.log(`Login attempt received for email: ${req.body.email}`); // Log attempt
+  
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const errorMsg = errors.array()[0].msg;
+      console.warn(`Login validation failed for ${req.body.email}: ${errorMsg}`); // Log validation error
+      req.flash('error', errorMsg);
+      return res.redirect('/login');
+    }
+  
+    console.log(`Passing login request for ${req.body.email} to Passport authenticate`);
+    passport.authenticate('local', {
+      successRedirect: '/admin/dashboard',
+      failureRedirect: '/login',
+      failureFlash: true
+    })(req, res, next);
+  };
+  
+  // Handle logout POST request
+  exports.postLogout = (req, res, next) => {
+    const userEmail = req.user ? req.user.email : 'unknown user'; // Get email before logout
+    console.log(`Logout request received for user: ${userEmail}`);
+    req.logout(function(err) {
+      if (err) {
+        console.error(`Logout error for user ${userEmail}:`, err);
+        return next(err);
+      }
+      console.log(`User ${userEmail} logged out successfully.`);
+      req.flash('success_msg', 'You are logged out');
+      res.redirect('/login');
+    });
+  };
+  

@@ -63,7 +63,7 @@ app.use((req, res, next) => {
 // Import Route Files
 const indexRoutes = require('./routes/index'); // Assuming index routes will be created
 const authRoutes = require('./routes/auth');
-// const adminRoutes = require('./routes/admin'); // Assuming admin routes will be created
+const adminRoutes = require('./routes/admin'); // Assuming admin routes will be created
 
 // Basic route for testing (can be removed or kept)
 // app.get('/', (req, res) => {
@@ -74,7 +74,7 @@ const authRoutes = require('./routes/auth');
 // Mount Routes
 app.use('/', indexRoutes); // Mount index routes
 app.use('/', authRoutes); // Mount authentication routes
-// app.use('/admin', adminRoutes);
+app.use('/admin', adminRoutes); // Mount admin routes with /admin prefix
 
 // 404 Handler (should be after all routes)
 app.use((req, res) => {
