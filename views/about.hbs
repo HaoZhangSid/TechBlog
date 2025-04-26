@@ -1,5 +1,81 @@
-<div class="container mx-auto px-4 py-8">
-  <h1 class="text-4xl font-bold mb-4">About Us</h1>
-  <p class="text-lg">This is the about page content.</p>
-  <a href="/" class="text-primary hover:underline mt-4 inline-block">Back to Home</a>
-</div> 
+<main id="main-content" class="bg-gray-900 text-gray-100 min-h-screen py-12" tabindex="-1">
+  <div class="container mx-auto px-4 max-w-4xl">
+
+    <header class="mb-12 text-center">
+      <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">About Tech<span class="text-cyan-500">Blog</span></h1>
+      <p class="text-xl text-gray-300">Discover the story behind the code.</p>
+    </header>
+
+    <section aria-labelledby="about-intro-heading" class="mb-12 bg-gray-800 p-6 md:p-8 rounded-lg border border-gray-700">
+      <h2 id="about-intro-heading" class="text-2xl font-semibold text-white mb-4">Welcome to TechBlog</h2>
+      <p class="text-gray-300 mb-4 leading-relaxed">
+        TechBlog is a modern web application designed for sharing insights and knowledge on technology, web development, and programming trends. It serves as a platform for authors to publish articles and engage with readers through comments.
+      </p>
+      <p class="text-gray-300 leading-relaxed">
+        This project demonstrates the integration of various modern web technologies to create a functional and accessible content management system. From backend logic to frontend presentation, care has been taken to build a robust and user-friendly experience.
+      </p>
+    </section>
+
+    <section aria-labelledby="features-heading" class="mb-12">
+      <h2 id="features-heading" class="text-2xl font-semibold text-white mb-6">Key Features</h2>
+      <ul class="list-disc list-inside space-y-3 text-gray-300 pl-4">
+        <li>Browse and read blog posts on various tech topics.</li>
+        <li>View comments associated with each post.</li>
+        <li>Secure admin login for content management.</li>
+        <li>Admin dashboard providing an overview of site content (posts, comments - *placeholder data currently*).</li>
+        <li>Functionality for administrators to create, view, edit, and manage blog posts (*admin post management routes to be fully implemented*).</li>
+        <li>Responsive design adapting to different screen sizes.</li>
+        <li>Accessible interface adhering to WCAG AA standards, including keyboard navigation and semantic structure.</li>
+      </ul>
+    </section>
+
+    <section aria-labelledby="tech-stack-heading" class="mb-12 bg-gray-800 p-6 md:p-8 rounded-lg border border-gray-700">
+      <h2 id="tech-stack-heading" class="text-2xl font-semibold text-white mb-6">Technology Stack</h2>
+      <dl class="space-y-4">
+        <div class="md:flex">
+          <dt class="md:w-1/4 font-medium text-cyan-400">Backend:</dt>
+          <dd class="md:w-3/4 text-gray-300">Node.js with Express.js for robust server-side logic and routing.</dd>
+        </div>
+        <div class="md:flex">
+          <dt class="md:w-1/4 font-medium text-cyan-400">Database:</dt>
+          <dd class="md:w-3/4 text-gray-300">MongoDB (via Mongoose ODM) for flexible NoSQL data storage.</dd>
+        </div>
+        <div class="md:flex">
+          <dt class="md:w-1/4 font-medium text-cyan-400">Templating:</dt>
+          <dd class="md:w-3/4 text-gray-300">Handlebars.js for dynamic server-side rendering of HTML.</dd>
+        </div>
+        <div class="md:flex">
+          <dt class="md:w-1/4 font-medium text-cyan-400">Styling:</dt>
+          <dd class="md:w-3/4 text-gray-300">Tailwind CSS for utility-first styling and responsive design, processed via PostCSS.</dd>
+        </div>
+        <div class="md:flex">
+          <dt class="md:w-1/4 font-medium text-cyan-400">Authentication:</dt>
+          <dd class="md:w-3/4 text-gray-300">Passport.js (Local Strategy) for secure user authentication and session management (using express-session and connect-mongo).</dd>
+        </div>
+        <div class="md:flex">
+          <dt class="md:w-1/4 font-medium text-cyan-400">Accessibility:</dt>
+          <dd class="md:w-3/4 text-gray-300">Semantic HTML, ARIA attributes where necessary, keyboard navigation support, and sufficient color contrast aiming for WCAG AA compliance.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section aria-labelledby="authors-heading" class="mb-12">
+      <h2 id="authors-heading" class="text-2xl font-semibold text-white mb-6">Meet the Developers</h2>
+      <div class="space-y-4">
+        <p class="text-gray-300 leading-relaxed">This project was collaboratively developed by:</p>
+        <ul class="list-disc list-inside space-y-2 text-gray-300 pl-4">
+          <li class="font-medium text-white">Hao Zhang</li>
+          <li class="font-medium text-white">Dinh Khanh Chi Nguyen</li>
+        </ul>
+        <p class="text-gray-300 leading-relaxed">Their combined effort brought TechBlog from concept to reality.</p>
+      </div>
+    </section>
+
+    <div class="text-center mt-12">
+      <a href="/" class="text-cyan-400 hover:text-cyan-300 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500 rounded-md px-3 py-2 inline-block min-h-[44px]">
+        ← Back to Home
+      </a>
+    </div>
+
+  </div>
+</main> 
