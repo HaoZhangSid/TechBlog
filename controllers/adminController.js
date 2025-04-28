@@ -41,7 +41,7 @@ exports.getPosts = async (req, res) => {
 
 // Display the form to create a new post
 exports.getCreatePost = (req, res) => {
-  res.render('post-create', { 
+  res.render('post-form', { 
     title: 'Write New Post',
     layout: 'admin',
     success_msg: req.flash('success_msg'),
@@ -93,7 +93,8 @@ exports.getEditPost = async (req, res) => {
       req.flash('error_msg', 'Post not found');
       return res.redirect('/admin/posts');
     }
-    res.render('post-edit', { 
+
+    res.render('post-form', { 
       title: 'Edit Post',
       layout: 'admin',
       post: post,
@@ -112,6 +113,11 @@ exports.getEditPost = async (req, res) => {
 exports.postEditPost = async (req, res) => {
   const postId = req.params.id;
   const { title, slug, summary, content, published } = req.body;
+  const post = await Post.findById(postId);
+  if (!post) {
+    req.flash('error_msg', 'Post not found');
+    return res.redirect('/admin/posts');
+  }
 
   // Validate input (to be improved with a express-validator)
   if (!title || !content || !slug || !summary) {
@@ -146,8 +152,8 @@ exports.postDeletePost = async (req, res) => {
 
   try {
     // Delete the post
-    await Post.findByIdAndDelete(postId);
-    if (!Post) {
+    const post = await Post.findByIdAndDelete(postId);
+    if (!post) {
       req.flash('error_msg', 'Post not found');
       return res.redirect('/admin/posts');
     } else {
