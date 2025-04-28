@@ -5,9 +5,9 @@ const path = require('path');
 const configureHandlebars = (app) => {
   app.engine('hbs', engine({
     extname: '.hbs',
-    defaultLayout: 'main', // Will be created later
-    layoutsDir: path.join(__dirname, '../views/layouts'), // Will be created later
-    partialsDir: path.join(__dirname, '../views/partials'), // Will be created later
+    defaultLayout: 'main',
+    layoutsDir: path.join(__dirname, '../views/layouts'),
+    partialsDir: path.join(__dirname, '../views/partials'),
     runtimeOptions: {
       allowProtoPropertiesByDefault: true,
       allowProtoMethodsByDefault: true,
@@ -63,7 +63,7 @@ const configureHandlebars = (app) => {
   }));
 
   app.set('view engine', 'hbs');
-  app.set('views', path.join(__dirname, '../views')); // Will be created later
+  app.set('views', path.join(__dirname, '../views'));
 };
 
 module.exports = configureHandlebars; 

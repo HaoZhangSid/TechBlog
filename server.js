@@ -1,12 +1,14 @@
 require('dotenv').config();
 const express = require('express');
-const session = require('express-session'); // Import express-session
-const MongoStore = require('connect-mongo'); // Import connect-mongo
-const passport = require('passport'); // Import passport
-const connectDB = require('./config/db'); // Import connectDB
-const configurePassport = require('./config/passport'); // Import passport config
-const flash = require('connect-flash'); // Import connect-flash
-const configureHandlebars = require('./config/handlebars'); // Import Handlebars config
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const passport = require('passport');
+const flash = require('connect-flash');
+
+// Import custom configurations
+const connectDB = require('./config/db');
+const configurePassport = require('./config/passport');
+const configureHandlebars = require('./config/handlebars');
 
 // Connect to database
 connectDB();
@@ -23,18 +25,18 @@ configureHandlebars(app);
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
 
-// Middleware for parsing request bodies (place before session)
+// Middleware for parsing request bodies
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Session configuration with MongoStore (place before routes)
+// Session configuration with MongoStore
 app.use(session({
   secret: process.env.SESSION_SECRET || 'a_very_strong_secret_fallback', // Ensure you have SESSION_SECRET in .env
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
     mongoUrl: process.env.MONGODB_URI, // Ensure you have MONGODB_URI in .env
-    collectionName: 'sessions' // Optional: Collection name for sessions
+    collectionName: 'sessions'
   }),
   cookie: {
     maxAge: 1000 * 60 * 60 * 24, // 1 day
@@ -44,7 +46,6 @@ app.use(session({
 }));
 
 // Passport Middleware (Initialize Passport and enable session support)
-// IMPORTANT: Must be placed AFTER express-session middleware
 app.use(passport.initialize());
 app.use(passport.session());
 

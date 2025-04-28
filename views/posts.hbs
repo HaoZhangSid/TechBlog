@@ -17,14 +17,14 @@
     </header>
 
     <!-- Flash Messages -->
-    {{#if successMessage}}
+    {{#if success_msg}}
       <div class="bg-green-100 text-green-800 p-4 mb-6 rounded-lg border border-green-300" role="alert" aria-live="polite">
-        {{successMessage}}
+        {{success_msg}}
       </div>
     {{/if}}
-    {{#if errorMessage}}
+    {{#if error_msg}}
       <div class="bg-red-100 text-red-800 p-4 mb-6 rounded-lg border border-red-300" role="alert" aria-live="polite">
-        {{errorMessage}}
+        {{error_msg}}
       </div>
     {{/if}}
 

@@ -29,8 +29,8 @@ exports.getPosts = async (req, res) => {
       title: 'All Posts',
       layout: 'admin',
       posts: posts,
-      successMessage: req.flash('successMessage'),
-      errorMessage: req.flash('errorMessage'),
+      success_msg: req.flash('success_msg'),
+      error_msg: req.flash('error_msg'),
     });
   } catch (error) {
     console.error(error);
@@ -44,8 +44,8 @@ exports.getCreatePost = (req, res) => {
   res.render('post-create', { 
     title: 'Write New Post',
     layout: 'admin',
-    successMessage: req.flash('successMessage'),
-    errorMessage: req.flash('errorMessage'),
+    success_msg: req.flash('success_msg'),
+    error_msg: req.flash('error_msg'),
   });
 };
 
@@ -55,7 +55,7 @@ exports.postCreatePost = async (req, res) => {
 
   // Validate input (to be improved with a express-validator)
   if (!title || !content || !slug || !summary) {
-    req.flash('errorMessage', 'All fields are required');
+    req.flash('error_msg', 'All fields are required');
     return res.redirect('/admin/posts/create');
   }
 
@@ -72,12 +72,12 @@ exports.postCreatePost = async (req, res) => {
     });
     newPost.author = req.user._id; // Set the author to the logged-in user
     await newPost.save();
-    req.flash('successMessage', 'Post created successfully');
+    req.flash('success_msg', 'Post created successfully');
     res.redirect('/admin/posts');
   }
   catch (error) {
     console.error(error);
-    req.flash('errorMessage', 'Error creating post' + error.message);
+    req.flash('error_msg', 'Error creating post' + error.message);
     res.redirect('/admin/posts/create');
   }
 }
@@ -90,20 +90,20 @@ exports.getEditPost = async (req, res) => {
     // Fetch the post to edit
     const post = await Post.findById(postId).populate('author', 'username');
     if (!post) {
-      req.flash('errorMessage', 'Post not found');
+      req.flash('error_msg', 'Post not found');
       return res.redirect('/admin/posts');
     }
     res.render('post-edit', { 
       title: 'Edit Post',
       layout: 'admin',
       post: post,
-      successMessage: req.flash('successMessage'),
-      errorMessage: req.flash('errorMessage'),
+      success_msg: req.flash('success_msg'),
+      error_msg: req.flash('error_msg'),
     });
   }
   catch (error) {
     console.error(error);
-    req.flash('errorMessage', 'Error fetching post' + error.message);
+    req.flash('error_msg', 'Error fetching post' + error.message);
     res.redirect('/admin/posts');
   }
 }
@@ -115,7 +115,7 @@ exports.postEditPost = async (req, res) => {
 
   // Validate input (to be improved with a express-validator)
   if (!title || !content || !slug || !summary) {
-    req.flash('errorMessage', 'All fields are required');
+    req.flash('error_msg', 'All fields are required');
     return res.redirect(`/admin/posts/${postId}/edit`);
   }
 
@@ -130,12 +130,12 @@ exports.postEditPost = async (req, res) => {
       published: published === 'on',
       updatedAt: new Date()
     });
-    req.flash('successMessage', 'Post updated successfully');
+    req.flash('success_msg', 'Post updated successfully');
     res.redirect('/admin/posts');
   }
   catch (error) {
     console.error(error);
-    req.flash('errorMessage', 'Error updating post' + error.message);
+    req.flash('error_msg', 'Error updating post' + error.message);
     res.redirect(`/admin/posts/${postId}/edit`);
   }
 }
@@ -147,17 +147,17 @@ exports.postDeletePost = async (req, res) => {
   try {
     // Delete the post
     await Post.findByIdAndDelete(postId);
-    if (!post) {
-      req.flash('errorMessage', 'Post not found');
+    if (!Post) {
+      req.flash('error_msg', 'Post not found');
       return res.redirect('/admin/posts');
     } else {
-      req.flash('successMessage', 'Post deleted successfully');
+      req.flash('success_msg', 'Post deleted successfully');
     }
     res.redirect('/admin/posts')
   }
   catch (error) {
     console.error(error);
-    req.flash('errorMessage', 'Error deleting post' + error.message);
+    req.flash('error_msg', 'Error deleting post' + error.message);
     res.redirect('/admin/posts');
   }
 }
