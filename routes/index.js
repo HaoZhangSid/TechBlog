@@ -1,23 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const indexController = require('../controllers/indexController');
 
-// @desc    Homepage
-// @route   GET /
-router.get('/', (req, res) => {
-  res.render('index', { 
-    title: 'Homepage' 
-    // No need to explicitly pass isAdminPage=false here, 
-    // it will be falsy by default in the template if not provided
-  }); 
-});
+// Route for the home page
+router.get('/', indexController.getHomePage);
 
-// @desc    About page
-// @route   GET /about
-router.get('/about', (req, res) => {
-  res.render('about', { 
-    title: 'About Us' 
-    // isAdminPage will be falsy here too
-  }); 
-});
+// Route for the post detail page
+router.get('/posts/:slug', indexController.getPostBySlug);
 
-module.exports = router; 
+// Route for the about page
+router.get('/about', indexController.getAboutPage);
+
+module.exports = router;

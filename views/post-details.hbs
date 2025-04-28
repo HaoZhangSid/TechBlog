@@ -1,0 +1,27 @@
+<div class="min-h-screen bg-gray-900 text-gray-100">
+  <div class="container mx-auto px-4 py-8 max-w-3xl">
+    <!-- Back to homepage -->
+    <a href="/" class="inline-flex items-center text-cyan-400 hover:text-cyan-300 mb-8 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md px-2 py-1" aria-label="Back to all articles">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to all articles
+    </a>
+
+    <!-- Article header -->
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold text-white mb-4 leading-tight">{{post.title}}</h1>
+      <div class="flex items-center text-sm text-gray-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        <time datetime="{{post.createdAt}}">{{formatDate post.createdAt "MMMM D, YYYY"}}</time>
+      </div>
+    </header>
+
+    <!-- Article content -->
+    <article class="prose prose-lg prose-invert max-w-none mb-16">
+      <div class="markdown-content">{{{post.content}}}</div>
+    </article>
+  </div>
+</div>
