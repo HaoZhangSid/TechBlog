@@ -1,9 +1,9 @@
-// create-post.js
 require('dotenv').config();
 const mongoose = require('mongoose');
 const connectDB = require('../config/db');
 const Post = require('../models/Post');
 const User = require('../models/User');
+const slugify = require('slugify');
 
 async function createPost() {
   try {
@@ -223,7 +223,11 @@ async function createPost() {
     const newPosts = [];
     for (const data of postData) {
       console.log(`Creating post: ${data.title}`);
-      const post = new Post(data);
+      const slug = slugify(data.title, { lower: true, strict: true });
+      const post = new Post({
+        ...data,
+        slug: slug,
+      });
       const savedPost = await post.save();
       newPosts.push(savedPost);
       console.log(`Post created successfully: ${savedPost.id}`);
