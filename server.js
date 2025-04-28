@@ -76,15 +76,42 @@ app.use('/', indexRoutes); // Mount index routes
 app.use('/', authRoutes); // Mount authentication routes
 app.use('/admin', adminRoutes); // Mount admin routes with /admin prefix
 
-// 404 Handler (should be after all routes)
-app.use((req, res) => {
-  res.status(404).send('404: Page Not Found'); // Simple 404 for now
+// Add a route specifically for testing the error handler
+app.get('/test-error', (req, res, next) => {
+  const testError = new Error("This is a deliberate test error!");
+  testError.status = 503; // Example: Service Unavailable
+  testError.id = 'TEST-ERR-001'; // Example error ID
+  next(testError); // Pass the error to the error handling middleware
 });
 
-// Error Handler (should be last)
+// 404 Handler (should be after all routes)
+app.use((req, res, next) => {
+  // Render the dedicated 404 view, using the default layout
+  res.status(404).render('404', { // Change 'error' to '404'
+    // No need to pass error or id for a standard 404 page
+    // The title can be set in the 404.hbs file itself or via a default
+  });
+});
+
+// Error Handler (should be the very last middleware)
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('500: Internal Server Error'); // Simple error response
+  console.error('Error occurred:', err.stack); // Log the full error stack trace
+
+  const statusCode = err.status || 500; // Use error status or default to 500
+  // In production, avoid sending detailed error messages to the client
+  const errorMessage = process.env.NODE_ENV === 'production' ? 'An unexpected error occurred on the server.' : err.message;
+  const errorId = err.id || 'UNKNOWN'; // Use error ID or default
+
+  // Ensure response headers are not already sent before attempting to render
+  if (res.headersSent) {
+    return next(err); // Delegate to default Express error handler if headers sent
+  }
+
+  // Render the error view, using the default layout
+  res.status(statusCode).render('error', {
+    error: errorMessage,
+    id: errorId
+  });
 });
 
 app.listen(PORT, () => {

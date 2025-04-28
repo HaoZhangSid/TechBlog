@@ -1,0 +1,77 @@
+<div class="min-h-screen bg-gray-900 text-gray-100 flex items-center justify-center">
+  <div class="w-full max-w-lg px-4 text-center">
+    <!-- Error display -->
+    <div class="mb-8">
+      <!-- ASCII art 404 -->
+      <pre class="text-cyan-500 font-mono text-sm sm:text-base whitespace-pre-wrap overflow-x-auto mb-4">
+   _  _    ___  _  _   
+  | || |  / _ \| || |  
+  | || |_| | | | || |_ 
+  |__   _| | | |__   _|
+     | | | |_| |  | |  
+     |_|  \___/   |_|  
+      </pre>
+      
+      <h1 class="text-4xl font-bold text-white mb-2">Page Not Found</h1>
+      <div class="h-1 w-16 bg-cyan-500 mx-auto my-6"></div>
+      <p class="text-xl text-gray-300 mb-8">The resource you're looking for doesn't exist or has been moved.</p>
+    </div>
+    
+    <!-- Circuit pattern decoration -->
+    <div class="relative mb-12">
+      <div class="absolute inset-0 flex items-center">
+        <div class="w-full border-t border-gray-700"></div>
+      </div>
+      <div class="relative flex justify-center">
+        <div class="px-4 flex items-center space-x-2">
+          <div class="w-2 h-2 rounded-full bg-gray-700"></div>
+          <div class="w-2 h-2 rounded-full bg-cyan-500"></div>
+          <div class="w-2 h-2 rounded-full bg-gray-700"></div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Helpful links -->
+    <div class="bg-gray-800 rounded-lg border border-gray-700 p-6 shadow-lg">
+      <h2 class="text-xl font-semibold text-white mb-4">Try one of these instead</h2>
+      <div class="grid gap-4 md:grid-cols-2">
+        <a 
+          href="/" 
+          class="flex items-center p-3 bg-gray-750 hover:bg-gray-700 border border-gray-600 rounded-md transition-colors group"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-cyan-400 group-hover:text-cyan-300" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+          </svg>
+          <span class="text-gray-300 group-hover:text-white transition-colors">Home Page</span>
+        </a>
+        
+        <a 
+          href="javascript:history.back()" 
+          class="flex items-center p-3 bg-gray-750 hover:bg-gray-700 border border-gray-600 rounded-md transition-colors group"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-cyan-400 group-hover:text-cyan-300" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+          </svg>
+          <span class="text-gray-300 group-hover:text-white transition-colors">Go Back</span>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Binary decoration -->
+    <div class="mt-12 text-xs font-mono text-gray-600 flex justify-center space-x-1">
+      <span>01000101</span>
+      <span>01010010</span>
+      <span>01010010</span>
+      <span>00110100</span>
+      <span>00110000</span>
+      <span>00110100</span>
+    </div>
+  </div>
+</div>
+
+<!-- Custom styling to add bg-gray-750 which isn't in standard Tailwind -->
+<style>
+  .bg-gray-750 {
+    background-color: #2d3748;
+  }
+</style> 
