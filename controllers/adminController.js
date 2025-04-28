@@ -3,6 +3,7 @@
 const { create } = require("connect-mongo");
 const { updateMany } = require("../models/User");
 const Post = require("../models/Post");
+const { default: slugify } = require("slugify");
 
 // Display Admin Dashboard
 exports.getDashboard = (req, res) => {
@@ -30,7 +31,7 @@ exports.getPosts = async (req, res) => {
       layout: 'admin',
       posts: posts,
       success_msg: req.flash('success_msg'),
-      error_msg: req.flash('error_msg'),
+      error_msg: req.flash('error_msg')
     });
   } catch (error) {
     console.error(error);
@@ -45,13 +46,13 @@ exports.getCreatePost = (req, res) => {
     title: 'Write New Post',
     layout: 'admin',
     success_msg: req.flash('success_msg'),
-    error_msg: req.flash('error_msg'),
+    error_msg: req.flash('error_msg')
   });
 };
 
 // Handle the creation of a new post
 exports.postCreatePost = async (req, res) => {
-  const { title, slug, summary, content, published } = req.body;
+  const { title, summary, content, published } = req.body;
 
   // Validate input (to be improved with a express-validator)
   if (!title || !content || !slug || !summary) {
@@ -61,16 +62,17 @@ exports.postCreatePost = async (req, res) => {
 
   try {
     // Create a new post
+    const slug = slugify(title, { lower: true, strict: true });
     const newPost = new Post({
       title,
       slug,
       summary,
       content,
       published: published === 'on', // Convert to boolean
+      author: req.user._id,
       createdAt: new Date(),
-      updateMany: new Date()
+      updatedAt: new Date()
     });
-    newPost.author = req.user._id; // Set the author to the logged-in user
     await newPost.save();
     req.flash('success_msg', 'Post created successfully');
     res.redirect('/admin/posts');
@@ -99,7 +101,7 @@ exports.getEditPost = async (req, res) => {
       layout: 'admin',
       post: post,
       success_msg: req.flash('success_msg'),
-      error_msg: req.flash('error_msg'),
+      error_msg: req.flash('error_msg')
     });
   }
   catch (error) {
@@ -122,7 +124,7 @@ exports.postEditPost = async (req, res) => {
   // Validate input (to be improved with a express-validator)
   if (!title || !content || !slug || !summary) {
     req.flash('error_msg', 'All fields are required');
-    return res.redirect(`/admin/posts/${postId}/edit`);
+    return res.redirect(`/admin/posts/edit/${postId}`);
   }
 
   try {
@@ -136,13 +138,14 @@ exports.postEditPost = async (req, res) => {
       published: published === 'on',
       updatedAt: new Date()
     });
+    await post.save();
     req.flash('success_msg', 'Post updated successfully');
     res.redirect('/admin/posts');
   }
   catch (error) {
     console.error(error);
     req.flash('error_msg', 'Error updating post' + error.message);
-    res.redirect(`/admin/posts/${postId}/edit`);
+    res.redirect(`/admin/posts/edit/${postId}`);
   }
 }
 
