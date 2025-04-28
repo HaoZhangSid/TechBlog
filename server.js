@@ -17,7 +17,6 @@ connectDB();
 configurePassport(passport);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
 // Configure Handlebars as the view engine
 configureHandlebars(app);
@@ -35,7 +34,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI, // Ensure you have MONGODB_URI in .env
+    mongoUrl: process.env.MONGODB_URI,
     collectionName: 'sessions'
   }),
   cookie: {
@@ -52,7 +51,7 @@ app.use(passport.session());
 // Flash Message Middleware (requires session)
 app.use(flash());
 
-// Global variables for flash messages (optional but helpful for views)
+// Global variables for flash messages and user authentication
 app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
@@ -61,23 +60,16 @@ app.use((req, res, next) => {
   next();
 });
 
-// Import Route Files
-const indexRoutes = require('./routes/index'); // Assuming index routes will be created
+// Import Route Files and mount routes
+const indexRoutes = require('./routes/index');
 const authRoutes = require('./routes/auth');
-const adminRoutes = require('./routes/admin'); // Assuming admin routes will be created
+const adminRoutes = require('./routes/admin');
 
-// Basic route for testing (can be removed or kept)
-// app.get('/', (req, res) => {
-//   console.log('User on / route:', req.user);
-//   res.send('Server is running! Session and Passport configured.');
-// });
+app.use('/', indexRoutes);
+app.use('/', authRoutes);
+app.use('/admin', adminRoutes);
 
-// Mount Routes
-app.use('/', indexRoutes); // Mount index routes
-app.use('/', authRoutes); // Mount authentication routes
-app.use('/admin', adminRoutes); // Mount admin routes with /admin prefix
-
-// Add a route specifically for testing the error handler
+// Add route for testing the error handler
 app.get('/test-error', (req, res, next) => {
   const testError = new Error("This is a deliberate test error!");
   testError.status = 503; // Example: Service Unavailable
@@ -85,27 +77,26 @@ app.get('/test-error', (req, res, next) => {
   next(testError); // Pass the error to the error handling middleware
 });
 
-// 404 Handler (should be after all routes)
+// Add route for 404 Handler
 app.use((req, res, next) => {
   // Render the dedicated 404 view, using the default layout
   res.status(404).render('404', { // Change 'error' to '404'
-    // No need to pass error or id for a standard 404 page
-    // The title can be set in the 404.hbs file itself or via a default
+    // The content is set in the 404.hbs file
   });
 });
 
-// Error Handler (should be the very last middleware)
+// Route for Error Handler
 app.use((err, req, res, next) => {
   console.error('Error occurred:', err.stack); // Log the full error stack trace
 
   const statusCode = err.status || 500; // Use error status or default to 500
   // In production, avoid sending detailed error messages to the client
   const errorMessage = process.env.NODE_ENV === 'production' ? 'An unexpected error occurred on the server.' : err.message;
-  const errorId = err.id || 'UNKNOWN'; // Use error ID or default
+  const errorId = err.id || 'UNKNOWN'; // Use error ID or Unknown if not provided
 
   // Ensure response headers are not already sent before attempting to render
   if (res.headersSent) {
-    return next(err); // Delegate to default Express error handler if headers sent
+    return next(err); // Delegate to default Express error handler
   }
 
   // Render the error view, using the default layout
@@ -115,6 +106,8 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Start the server
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server started on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 }); 
