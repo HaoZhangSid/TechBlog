@@ -67,7 +67,7 @@
                   <a href="/admin/posts/edit/{{_id}}" class="text-cyan-400 hover:text-cyan-300 transition-colors">
                     Edit
                   </a>
-                  <a href="/post/{{slug}}" target="_blank" class="text-indigo-400 hover:text-indigo-300 transition-colors">
+                  <a href="/post/{{or slug 'no-slug'}}" target="_blank" class="text-indigo-400 hover:text-indigo-300 transition-colors">
                     View
                   </a>
                   <form action="/admin/posts/delete/{{_id}}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this post? This action cannot be undone.');">
