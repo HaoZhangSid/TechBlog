@@ -17,27 +17,37 @@ const postSchema = new mongoose.Schema({
 // Pre-save hook to set the author field
 postSchema.pre('save', async function(next) {
     if (this.isNew) {
-        const user = await User.findById(this.author);
-        if (!user) {
-            return next(new Error('Author not found'));
+        try {
+            const user = await User.findById(this.author);
+            if (!user) {
+                return next(new Error('Author not found'));
+            }
+        } catch (error) {
+            return next(error);
         }
     }
     next();
 });
 
-// Update a slug when the title is modified
-postSchema.pre('validate', function(next) {
-    if (this.isModified('title')) {
-        this.slug = slugify(this.title, { lower: true, strict: true });
+// Pre-save hook to set the slug field and updatedAt field
+postSchema.pre('save', async function(next) {
+    try {
+        if (this.isNew || this.isModified('title')) {
+            let baseSlug = slugify(this.title, { lower: true, strict: true });
+            let slug = baseSlug;
+            let count = 1; // Initialize count for slug uniqueness
+            while (await Post.findOne({ slug, _id: { $ne: this._id } })) {
+                // If slug already exists, append a number to make it unique and increment count
+                slug = `${baseSlug}-${count}`;
+                count++;
+            }
+            this.slug = slug;
+        }
+        this.updatedAt = new Date();
+        next();
+    } catch (error) {
+        next(error);
     }
-    next();
-}
-);
-
-// Update the updatedAt field before saving
-postSchema.pre('save', function(next) {
-    this.updatedAt = Date.now();
-    next();
 });
 
 // Export the Post model
