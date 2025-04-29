@@ -18,6 +18,9 @@ router.post('/login', passport.authenticate('local', {
   failureFlash: true                   // Enable flash messages for errors
 }));
 
+// GET /forgot-password - Display forgot password page
+router.get('/forgot-password', authController.getForgotPasswordPage);
+
 // POST /logout - Handle logout
 router.post('/logout', authController.postLogout);
 

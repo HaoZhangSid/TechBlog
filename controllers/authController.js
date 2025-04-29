@@ -30,6 +30,18 @@ exports.getLoginPage = (req, res) => {
     })(req, res, next);
   };
   
+  // Display forgot password page
+  exports.getForgotPasswordPage = (req, res) => {
+    if (req.isAuthenticated()) {
+      // If user is already logged in, redirect them away from forgot password
+      return res.redirect('/');
+    }
+    res.render('forgot-password', {
+      title: 'Forgot Password',
+      message: null // Initialize message as null (or use flash messages)
+    });
+  };
+  
   // Handle logout POST request
   exports.postLogout = (req, res, next) => {
     const userEmail = req.user ? req.user.email : 'unknown user'; // Get email before logout
