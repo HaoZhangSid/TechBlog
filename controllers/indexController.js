@@ -1,24 +1,16 @@
 const Post = require('../models/Post');
+const { samplePosts } = require('../data/sampleData');
 
 // Display home page with published posts
-exports.getHomePage = async (req, res) => {
-    try {
-      const publishedPosts = await Post.find({ published: true })
-        .sort({ createdAt: -1 }) // Sort by newest first
-        .lean();
-  
-      res.render('index', {
-        title: 'Homepage',
-        description: 'A blog about web development and technology',
-        posts: publishedPosts,
-        isHomePage: true
-      });
-    } catch (error) {
-      console.error('Error fetching posts:', error);
-      req.flash('error_msg', 'Error fetching posts: ' + error.message);
-      res.redirect('/');
-    }
-  };
+exports.getHomePage = (req, res) => {
+  const publishedPosts = samplePosts.filter(post => post.published);
+  res.render('index', {
+    title: 'Homepage',
+    description: 'A blog about web development and technology',
+    posts: publishedPosts,
+    isHomePage: true
+  });
+};
 
 // Display post detail page with error handling
 exports.getPostBySlug = async (req, res) => {
