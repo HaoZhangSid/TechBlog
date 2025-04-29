@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const { check } = require('express-validator'); // Import check if needed for validation
+const { check, validationResult } = require('express-validator');
 
 // Import controller (we will create this next)
 const authController = require('../controllers/authController');
@@ -11,18 +11,50 @@ const authController = require('../controllers/authController');
 router.get('/login', authController.getLoginPage);
 
 // POST /login - Handle login attempt
-// Add validation middleware if desired
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/admin/dashboard', // Redirect on success (will create later)
-  failureRedirect: '/login',          // Redirect on failure
-  failureFlash: true                   // Enable flash messages for errors
-}));
+router.post('/login', [
+  check('email', 'Please enter a valid email').isEmail(),
+  check('password', 'Password is required').notEmpty()
+], authController.postLogin);
+
+// GET /register - Display register page
+router.get('/register', authController.getRegisterPage);
+
+// POST /register - Handle register attempt
+router.post('/register', [
+  check('name', 'Name is required').notEmpty(),
+  check('email', 'Please enter a valid email').isEmail(),
+  check('password', 'Password must be at least 8 characters').isLength({ min: 8 }),
+  check('password2').custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error('Passwords do not match');
+    }
+    return true;
+  })
+], authController.postRegister);
 
 // GET /forgot-password - Display forgot password page
 router.get('/forgot-password', authController.getForgotPasswordPage);
 
+// POST /forgot-password - Handle forgot password request
+router.post('/forgot-password', [
+  check('email', 'Please enter a valid email').isEmail()
+], authController.postForgotPassword);
+
+// GET /reset-password/:token - Display reset password page
+router.get('/reset-password/:token', authController.getResetPasswordPage);
+
+// POST /reset-password/:token - Handle reset password request
+router.post('/reset-password/:token', [
+  check('password', 'Password must be at least 8 characters').isLength({ min: 8 }),
+  check('password2').custom((value, { req }) => {
+    if (value !== req.body.password) {
+      throw new Error('Passwords do not match');
+    }
+    return true;
+  })
+], authController.postResetPassword);
+
 // POST /logout - Handle logout
 router.post('/logout', authController.postLogout);
-
 
 module.exports = router; 

@@ -1,3 +1,9 @@
+const passport = require('passport');
+const { validationResult } = require('express-validator');
+const User = require('../models/User');
+const emailService = require('../config/nodemailer');
+const { generateResetToken, hashToken } = require('../utils/tokenGenerator');
+
 // Display login page
 exports.getLoginPage = (req, res) => {
     if (req.isAuthenticated()) {
@@ -30,6 +36,63 @@ exports.getLoginPage = (req, res) => {
     })(req, res, next);
   };
   
+  // Display register page
+  exports.getRegisterPage = (req, res) => {
+    if (req.isAuthenticated()) {
+      return res.redirect('/admin/dashboard');
+    }
+    res.render('register', {
+      title: 'Register',
+      description: 'Create a new account'
+    });
+  };
+  
+  // Handle register POST request
+  exports.postRegister = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      req.flash('error', errors.array()[0].msg);
+      return res.redirect('/register');
+    }
+  
+    try {
+      const { name, email, password } = req.body;
+      
+      // Check if email is already registered
+      const existingUser = await User.findOne({ email: email.toLowerCase() });
+      if (existingUser) {
+        req.flash('error_msg', 'Email is already registered');
+        return res.redirect('/register');
+      }
+  
+      // Create new user
+      const newUser = new User({
+        name,
+        email: email.toLowerCase(),
+        password
+      });
+  
+      await newUser.save();
+      console.log(`New user registered: ${email}`);
+  
+      // Send welcome email
+      try {
+        await emailService.sendWelcomeEmail(newUser.email, newUser.name);
+        console.log(`Welcome email sent to: ${newUser.email}`);
+      } catch (emailError) {
+        console.error('Failed to send welcome email:', emailError);
+        // Do not expose email sending errors to users
+      }
+  
+      req.flash('success_msg', 'You are now registered and can log in');
+      res.redirect('/login');
+    } catch (err) {
+      console.error('Error during registration:', err);
+      req.flash('error_msg', 'An error occurred during registration');
+      res.redirect('/register');
+    }
+  };
+  
   // Display forgot password page
   exports.getForgotPasswordPage = (req, res) => {
     if (req.isAuthenticated()) {
@@ -40,6 +103,102 @@ exports.getLoginPage = (req, res) => {
       title: 'Forgot Password',
       message: null // Initialize message as null (or use flash messages)
     });
+  };
+  
+  // Handle forgot password POST request
+  exports.postForgotPassword = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      req.flash('error', errors.array()[0].msg);
+      return res.redirect('/forgot-password');
+    }
+  
+    try {
+      const { email } = req.body;
+      const user = await User.findOne({ email: email.toLowerCase() });
+  
+      // For security, show success message regardless of whether the user exists
+      req.flash('success_msg', 'If your email is registered, you will receive password reset instructions');
+  
+      if (user) {
+        const resetToken = generateResetToken();
+        user.resetPasswordToken = hashToken(resetToken);
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour validity
+        await user.save();
+  
+        try {
+          await emailService.sendPasswordResetEmail(user.email, resetToken, user.name);
+          console.log(`Password reset email sent to: ${user.email}`);
+        } catch (emailError) {
+          console.error('Failed to send password reset email:', emailError);
+          // Do not expose email sending errors to users
+        }
+      }
+      res.redirect('/login');
+    } catch (err) {
+      console.error('Error during forgot password processing:', err);
+      req.flash('error', 'An error occurred. Please try again.');
+      res.redirect('/forgot-password');
+    }
+  };
+  
+  // Display reset password page
+  exports.getResetPasswordPage = async (req, res) => {
+    try {
+      const hashedToken = hashToken(req.params.token);
+      const user = await User.findOne({
+        resetPasswordToken: hashedToken,
+        resetPasswordExpires: { $gt: Date.now() }
+      });
+  
+      if (!user) {
+        req.flash('error_msg', 'Password reset token is invalid or has expired');
+        return res.redirect('/forgot-password');
+      }
+  
+      res.render('reset-password', {
+        title: 'Reset Password',
+        token: req.params.token
+      });
+    } catch (err) {
+      console.error('Error checking reset token:', err);
+      req.flash('error_msg', 'An error occurred. Please try again.');
+      res.redirect('/forgot-password');
+    }
+  };
+  
+  // Handle reset password POST request
+  exports.postResetPassword = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      req.flash('error', errors.array()[0].msg);
+      return res.redirect(`/reset-password/${req.params.token}`);
+    }
+  
+    try {
+      const hashedToken = hashToken(req.params.token);
+      const user = await User.findOne({
+        resetPasswordToken: hashedToken,
+        resetPasswordExpires: { $gt: Date.now() }
+      });
+  
+      if (!user) {
+        req.flash('error_msg', 'Password reset token is invalid or has expired');
+        return res.redirect('/forgot-password');
+      }
+  
+      user.password = req.body.password; // User model's pre-save hook will hash the password
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+      await user.save();
+  
+      req.flash('success_msg', 'Your password has been updated. Please log in with your new password.');
+      res.redirect('/login');
+    } catch (err) {
+      console.error('Error during password reset:', err);
+      req.flash('error', 'An error occurred while resetting your password');
+      res.redirect('/forgot-password');
+    }
   };
   
   // Handle logout POST request

@@ -23,3 +23,56 @@ This project is a straightforward tech blog platform that was constructed with M
 *   TailwindCSS (with PostCSS) to be used for styling.
 *   Nodemailer to be used to send emails for password reset.
 *   `Express-validator` to be used for validation.
+
+## Email Configuration
+
+The application uses Nodemailer to send welcome emails and password reset emails. To set up the email functionality:
+
+### For Gmail
+
+1. Create a Gmail account or use an existing one
+2. Enable 2-Step Verification for your Google account
+3. Generate an App Password:
+   - Go to your Google Account settings
+   - Select "Security"
+   - Under "Signing in to Google," select "App passwords"
+   - Generate a new app password for "Mail" and your application
+4. Configure the following environment variables:
+   ```
+   EMAIL_HOST=smtp.gmail.com
+   EMAIL_PORT=587
+   EMAIL_USER=your.email@gmail.com
+   EMAIL_PASS=your_app_password_here
+   EMAIL_FROM=your.email@gmail.com
+   APP_URL=http://localhost:3000
+   ```
+
+### For Development (Without Real Emails)
+
+If you don't configure an email account, the application will automatically use Ethereal Email for testing in development mode. This allows you to view sent emails through their web interface without actually sending them.
+
+## Environment Variables
+
+Create a `.env` file in the root directory with the following variables:
+
+```
+# Database Configuration
+MONGODB_URI=mongodb://localhost:27017/tech-blog
+
+# Session Configuration
+SESSION_SECRET=your_session_secret_here
+
+# Server Configuration
+PORT=3000
+NODE_ENV=development
+
+# Application URL (for generating links in emails)
+APP_URL=http://localhost:3000
+
+# Email Configuration
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USER=your.email@gmail.com
+EMAIL_PASS=your_gmail_app_password
+EMAIL_FROM=your.email@gmail.com
+```
