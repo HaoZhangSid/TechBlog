@@ -28,6 +28,9 @@ app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Trust the first hop (important for environments like Azure App Service)
+app.set('trust proxy', 1);
+
 // Session configuration with MongoStore
 app.use(session({
   secret: process.env.SESSION_SECRET || 'a_very_strong_secret_fallback', // Ensure you have SESSION_SECRET in .env
