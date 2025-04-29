@@ -1,10 +1,10 @@
 // Index Controller
-const { postData } = require('../data/sampleData');
+const { samplePosts } = require('../data/sampleData');
 const Post = require('../models/Post');
 
 // Display home page with published posts
 exports.getHomePage = (req, res) => {
-  const publishedPosts = postData.filter(post => post.published);
+  const publishedPosts = samplePosts.filter(post => post.published);
   res.render('index', {
     title: 'Homepage',
     description: 'A blog about web development and technology',
