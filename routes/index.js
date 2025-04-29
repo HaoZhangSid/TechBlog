@@ -6,7 +6,7 @@ const indexController = require('../controllers/indexController');
 router.get('/', indexController.getHomePage);
 
 // Route for the post detail page
-router.get('/posts/:slug', indexController.getPostBySlug);
+router.get('/post/:slug', indexController.getPostBySlug);
 
 // Route for the about page
 router.get('/about', indexController.getAboutPage);
