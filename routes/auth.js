@@ -16,22 +16,6 @@ router.post('/login', [
   check('password', 'Password is required').notEmpty()
 ], authController.postLogin);
 
-// GET /register - Display register page
-router.get('/register', authController.getRegisterPage);
-
-// POST /register - Handle register attempt
-router.post('/register', [
-  check('name', 'Name is required').notEmpty(),
-  check('email', 'Please enter a valid email').isEmail(),
-  check('password', 'Password must be at least 8 characters').isLength({ min: 8 }),
-  check('password2').custom((value, { req }) => {
-    if (value !== req.body.password) {
-      throw new Error('Passwords do not match');
-    }
-    return true;
-  })
-], authController.postRegister);
-
 // GET /forgot-password - Display forgot password page
 router.get('/forgot-password', authController.getForgotPasswordPage);
 

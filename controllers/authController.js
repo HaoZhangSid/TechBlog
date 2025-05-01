@@ -36,63 +36,6 @@ exports.getLoginPage = (req, res) => {
     })(req, res, next);
   };
   
-  // Display register page
-  exports.getRegisterPage = (req, res) => {
-    if (req.isAuthenticated()) {
-      return res.redirect('/admin/dashboard');
-    }
-    res.render('register', {
-      title: 'Register',
-      description: 'Create a new account'
-    });
-  };
-  
-  // Handle register POST request
-  exports.postRegister = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      req.flash('error', errors.array()[0].msg);
-      return res.redirect('/register');
-    }
-  
-    try {
-      const { name, email, password } = req.body;
-      
-      // Check if email is already registered
-      const existingUser = await User.findOne({ email: email.toLowerCase() });
-      if (existingUser) {
-        req.flash('error_msg', 'Email is already registered');
-        return res.redirect('/register');
-      }
-  
-      // Create new user
-      const newUser = new User({
-        name,
-        email: email.toLowerCase(),
-        password
-      });
-  
-      await newUser.save();
-      console.log(`New user registered: ${email}`);
-  
-      // Send welcome email
-      try {
-        await emailService.sendWelcomeEmail(newUser.email, newUser.name);
-        console.log(`Welcome email sent to: ${newUser.email}`);
-      } catch (emailError) {
-        console.error('Failed to send welcome email:', emailError);
-        // Do not expose email sending errors to users
-      }
-  
-      req.flash('success_msg', 'You are now registered and can log in');
-      res.redirect('/login');
-    } catch (err) {
-      console.error('Error during registration:', err);
-      req.flash('error_msg', 'An error occurred during registration');
-      res.redirect('/register');
-    }
-  };
-  
   // Display forgot password page
   exports.getForgotPasswordPage = (req, res) => {
     if (req.isAuthenticated()) {
@@ -101,7 +44,7 @@ exports.getLoginPage = (req, res) => {
     }
     res.render('forgot-password', {
       title: 'Forgot Password',
-      message: null // Initialize message as null (or use flash messages)
+      description: 'Reset your password'
     });
   };
   
@@ -158,6 +101,7 @@ exports.getLoginPage = (req, res) => {
   
       res.render('reset-password', {
         title: 'Reset Password',
+        description: 'Set a new password for your account',
         token: req.params.token
       });
     } catch (err) {
