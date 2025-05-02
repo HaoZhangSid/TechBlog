@@ -70,6 +70,7 @@ exports.getCreatePost = (req, res) => {
 // Handle the creation of a new post
 exports.postCreatePost = async (req, res) => {
   const { title, summary, content, published } = req.body;
+  const slug = slugify(title, { lower: true, strict: true });
 
   // Validate input (to be improved with a express-validator)
   const slug = slugify(title, { lower: true, strict: true });
@@ -130,10 +131,9 @@ exports.getEditPost = async (req, res) => {
 
 // Handle the update of a post
 exports.postEditPost = async (req, res) => {
-  const postId = req.params.id;
-
   try {
     // Fetch the post to edit
+    const postId = req.params.id;
     const post = await Post.findById(postId);
     if (!post) {
       req.flash('error_msg', 'Post not found');

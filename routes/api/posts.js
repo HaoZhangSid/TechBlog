@@ -3,7 +3,11 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const Post = require('../../models/Post');
 const { isAuthenticated } = require('../../middleware/auth');
+<<<<<<< Updated upstream
 const { default: slugify } = require("slugify");
+=======
+const slugify = require('slugify');
+>>>>>>> Stashed changes
 
 // GET all posts
 router.get('/', async (req, res) => {
@@ -54,6 +58,7 @@ router.post(
         title,
         slug,
         summary,
+        slug,
         content,
         published: published || false,
         author: req.user.id,
@@ -61,8 +66,8 @@ router.post(
         updatedAt: new Date()
       });
       await newPost.save();
-      res.status(201).json(newPost);
       res.location(`/api/posts/${newPost._id}`);
+      res.status(201).json(newPost);
     } catch (err) {
       console.error('Error creating post:', err);
       if (err.code === 11000) {
@@ -99,7 +104,7 @@ router.put(
       }
 
       // Allow the author to update only their own posts
-      if (post.author.toString() !== req.user._id.toString()) {
+      if (post.author.toString() !== req.user.id.toString()) {
         return res.status(403).json({ message: 'Forbidden: You can only edit your own posts' });
       }
 
@@ -115,7 +120,7 @@ router.put(
     } catch (err) {
       console.error('Error updating post:', err);
       if (err.code === 11000) {
-        res.status(400).json({ message: 'A post with this title already exists' });
+        res.status(400).json({ message: 'A post with this title or slug already exists' });
       } else if (err.name === 'ValidationError') {
         res.status(400).json({ message: err.message });
       } else {
@@ -135,7 +140,7 @@ router.delete('/:id', isAuthenticated, async (req, res) => {
     }
 
     // Allow the author to delete only their own posts
-    if (post.author.toString() !== req.user._id.toString()) {
+    if (post.author.toString() !== req.user.id.toString()) {
       return res.status(403).json({ message: 'Forbidden: You can only delete your own posts' });
     }
 
