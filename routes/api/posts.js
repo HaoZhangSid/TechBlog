@@ -15,11 +15,11 @@ router.get('/', async (req, res) => {
   }
 });
 
-// GET a post by id
+// GET a post by ID
 router.get('/:id', async (req, res) => {
-  const { id } = req.params.id;
+  const id = req.params.id;
   try {
-    const post = await Post.findById({ id }).populate('author', 'username').lean();
+    const post = await Post.findById(id).populate('author', 'username').lean();
     if (post) {
       res.json(post);
     } else {
@@ -84,13 +84,13 @@ router.put(
   ],
   async (req, res) => {
     const errors = validationResult(req);
-    const { id } = req.params.id;
+    const id = req.params.id;
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
     try {
-      const post = await Post.findById({ id });
+      const post = await Post.findById(id);
       if (!post) {
         return res.status(404).json({ message: 'Post not found' });
       }
@@ -124,9 +124,9 @@ router.put(
 
 // DELETE a post by ID
 router.delete('/:id', isAuthenticated, async (req, res) => {
-  const { id } = req.params.id;
+  const id = req.params.id;
   try {
-    const post = await Post.findById({ id });
+    const post = await Post.findById(id);
     if (!post) {
       return res.status(404).json({ message: 'Post not found' });
     }
