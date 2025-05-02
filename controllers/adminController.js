@@ -57,6 +57,7 @@ exports.postCreatePost = async (req, res) => {
   const { title, summary, content, published } = req.body;
 
   // Validate input (to be improved with a express-validator)
+  const slug = slugify(title, { lower: true, strict: true });
   if (!title || !content || !slug || !summary) {
     req.flash('error_msg', 'All fields are required');
     return res.redirect('/admin/posts/create');
@@ -64,14 +65,13 @@ exports.postCreatePost = async (req, res) => {
 
   try {
     // Create a new post
-    const slug = slugify(title, { lower: true, strict: true });
     const newPost = new Post({
       title,
       slug,
       summary,
       content,
       published: published === 'on', // Convert to boolean
-      author: req.user._id,
+      author: req.user.id,
       createdAt: new Date(),
       updatedAt: new Date()
     });

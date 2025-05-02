@@ -21,7 +21,39 @@
 
     <!-- Article content -->
     <article class="prose prose-lg prose-invert max-w-none mb-16">
-      <div class="text-content">{{post.content}}</div>
+      <div class="markdown-content">{{{post.content}}}</div>
     </article>
   </div>
 </div>
+
+<!-- Markdown rendering script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Render Markdown content
+    const markdownContent = document.querySelector('.markdown-content');
+    if (markdownContent) {
+      const rawMarkdown = markdownContent.textContent;
+      
+      try {
+        // Ensure marked library is available
+        if (typeof marked !== 'undefined') {
+          const htmlContent = marked.parse(rawMarkdown);
+          markdownContent.innerHTML = htmlContent;
+          
+          // Apply syntax highlighting if hljs is available
+          if (typeof hljs !== 'undefined') {
+            document.querySelectorAll('pre code').forEach((block) => {
+              hljs.highlightBlock(block);
+            });
+          }
+        } else {
+          console.error('Marked library is not loaded.');
+        }
+      } catch (error) {
+        console.error('Error rendering Markdown:', error);
+      }
+    } else {
+      console.error('Could not find .markdown-content element.');
+    }
+  });
+</script>

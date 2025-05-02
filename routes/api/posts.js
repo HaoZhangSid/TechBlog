@@ -3,6 +3,7 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const Post = require('../../models/Post');
 const { isAuthenticated } = require('../../middleware/auth');
+const { default: slugify } = require("slugify");
 
 // GET all posts
 router.get('/', async (req, res) => {
@@ -48,12 +49,14 @@ router.post(
 
     try {
       const { title, summary, content, published } = req.body;
+      const slug = slugify(title, { lower: true, strict: true });
       const newPost = new Post({
         title,
+        slug,
         summary,
         content,
         published: published || false,
-        author: req.user._id,
+        author: req.user.id,
         createdAt: new Date(),
         updatedAt: new Date()
       });

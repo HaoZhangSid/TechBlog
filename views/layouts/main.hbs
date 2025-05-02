@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{title}} - My Blog</title> {{!-- Basic title for now --}}
   <link rel="stylesheet" href="/css/styles.css"> {{!-- Link to compiled CSS --}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"> {{!-- Highlight.js Dark Theme --}}
   <script>document.documentElement.classList.remove('no-js');</script> {{!-- Basic JS check --}}
 </head>
 <body>
@@ -103,5 +104,7 @@
   {{!-- {{> common-scripts}} --}}
   
   {{!-- Add any page-specific scripts here if needed --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/13.0.2/marked.min.js"></script> {{!-- Marked.js CDN --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script> {{!-- Highlight.js CDN --}}
 </body>
 </html> 

@@ -51,9 +51,9 @@
           <tbody class="divide-y divide-gray-700">
             {{#each posts}}
               <tr class="hover:bg-gray-750 transition-colors">
-                <td class="px-6 py-4 whitespace-nowrap">
-                  <div class="text-sm font-medium text-white">{{title}}</div>
-                  <div class="text-sm text-gray-400">{{truncate slug 30}}</div>
+                <td class="px-6 py-4 max-w-xs">
+                  <div class="text-sm font-medium text-white truncate">{{title}}</div>
+                  <div class="text-sm text-gray-400 truncate">{{truncate slug 30}}</div>
                 </td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                   {{formatDate createdAt "MMMM D, YYYY"}}
@@ -63,7 +63,7 @@
                     {{#if published}}Published{{else}}Draft{{/if}}
                   </span>
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2 w-48">
                   <a href="/admin/posts/edit/{{_id}}" class="text-cyan-400 hover:text-cyan-300 transition-colors">
                     Edit
                   </a>
