@@ -9,6 +9,7 @@ module.exports = {
     // User is not logged in
     console.log('Auth Middleware: User not authenticated, redirecting to /login');
     req.flash('error_msg', 'Please log in to view this resource.');
+    res.status(401).json({ message: 'Unauthorized: Please log in.' });
     res.redirect('/login');
   },
 
