@@ -4,13 +4,13 @@ const router = express.Router();
 const passport = require('passport');
 const { check, validationResult } = require('express-validator');
 
-// Import controller (we will create this next)
+// Import controller
 const authController = require('../controllers/authController');
 
 // GET /login - Display login page
 router.get('/login', authController.getLoginPage);
 
-// POST /login - Handle login attempt
+// POST /login - Handle login attempt (web-based)
 router.post('/login', [
   check('email', 'Please enter a valid email').isEmail(),
   check('password', 'Password is required').notEmpty()
@@ -40,5 +40,31 @@ router.post('/reset-password/:token', [
 
 // POST /logout - Handle logout
 router.post('/logout', authController.postLogout);
+
+// POST /api/login - Handle login attempt (API-based)
+router.post('/api/login', [
+    check('email', 'Please enter a valid email').isEmail(),
+    check('password', 'Password is required').notEmpty()
+  ], (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    passport.authenticate('local', (err, user, info) => {
+      if (err) {
+        return res.status(500).json({ message: 'Server error' });
+      }
+      if (!user) {
+        return res.status(401).json({ message: 'Invalid credentials' || info.message });
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          return res.status(500).json({ message: 'Server error' });
+        }
+        return res.status(200).json({ message: 'Authenticated successfully', user });
+      });
+    })(req, res, next);
+  }
+);
 
 module.exports = router; 
