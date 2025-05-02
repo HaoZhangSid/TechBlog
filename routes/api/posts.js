@@ -3,11 +3,7 @@ const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const Post = require('../../models/Post');
 const { isAuthenticated } = require('../../middleware/auth');
-<<<<<<< Updated upstream
-const { default: slugify } = require("slugify");
-=======
 const slugify = require('slugify');
->>>>>>> Stashed changes
 
 // GET all posts
 router.get('/', async (req, res) => {
