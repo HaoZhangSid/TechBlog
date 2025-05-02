@@ -6,20 +6,35 @@ const Post = require("../models/Post");
 const { default: slugify } = require("slugify");
 
 // Display Admin Dashboard
-exports.getDashboard = (req, res) => {
-  // Data for the dashboard (replace with actual data fetching later)
-  const postCount = 4;
-  const commentCount = 1;
+exports.getDashboard = async (req, res) => {
+  try {
+    // Fetch the actual post count from the database
+    const postCount = await Post.countDocuments();
+    
+    // Keep comment count hardcoded for now, or fetch if needed
+    const commentCount = 1; 
 
-  res.render('admin-dashboard', { 
-    title: 'Admin Dashboard',
-    layout: 'admin',
-    postCount: postCount,
-    commentCount: commentCount,
-    success_msg: req.flash('success_msg'),
-    error_msg: req.flash('error_msg')
-    // user is already available globally via res.locals
-  });
+    res.render('admin-dashboard', { 
+      title: 'Admin Dashboard',
+      layout: 'admin',
+      postCount: postCount,
+      commentCount: commentCount,
+      success_msg: req.flash('success_msg'),
+      error_msg: req.flash('error_msg')
+      // user is already available globally via res.locals
+    });
+  } catch (error) {
+    console.error('Error fetching dashboard data:', error);
+    req.flash('error_msg', 'Could not fetch dashboard statistics.');
+    res.render('admin-dashboard', {
+      title: 'Admin Dashboard',
+      layout: 'admin',
+      postCount: 0,
+      commentCount: 1,
+      success_msg: req.flash('success_msg'), 
+      error_msg: req.flash('error_msg')
+    });
+  }
 };
 
 // Display all posts
