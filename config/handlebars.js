@@ -13,10 +13,6 @@ const configureHandlebars = (app) => {
       allowProtoMethodsByDefault: true,
     },
     helpers: {
-      // Logical OR helper
-      or: function(a, b) {
-        return a || b;
-      },
       // Current year helper
       currentYear: function() {
         return new Date().getFullYear();
