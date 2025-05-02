@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema({
   published: { type: Boolean, default: false }
 });
 
-// Pre-save hook to generate a slug from the title
+// Generate a slug from the title before saving
 postSchema.pre('save', function(next) {
     if (this.isModified('title') || this.isNew) {
         this.slug = slugify(this.title, { lower: true, strict: true });
@@ -22,9 +22,9 @@ postSchema.pre('save', function(next) {
     next();
 });
 
-// Pre-save hook to update the updatedAt field
+// Update the updatedAt field before saving
 postSchema.pre('save', function(next) {
-    this.updatedAt = new Date();
+    this.updatedAt = new Date.now();
     next();
 });
 
