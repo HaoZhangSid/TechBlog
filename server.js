@@ -67,10 +67,12 @@ app.use((req, res, next) => {
 const indexRoutes = require('./routes/index');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+const postRoutes = require('./routes/api/posts');
 
 app.use('/', indexRoutes);
 app.use('/', authRoutes);
 app.use('/admin', adminRoutes);
+app.use('/api/posts', postRoutes);
 
 // Add route for testing the error handler
 app.get('/test-error', (req, res, next) => {
