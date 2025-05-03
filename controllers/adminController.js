@@ -1,9 +1,19 @@
 // controllers/adminController.js
-
-const { create } = require("connect-mongo");
-const { updateMany } = require("../models/User");
 const Post = require("../models/Post");
 const { default: slugify } = require("slugify");
+const { body, validationResult } = require("express-validator");
+
+// Validation middleware for post creation and editing
+const postValidation = [
+  body("title").notEmpty().withMessage("Title is required").trim()
+  .customSanitizer((value) => value.replace(/#{1,6}\s*/g, ''))
+  .isLength({ min: 5, max: 100 }).withMessage("Title must be between 5 and 100 characters long"),
+  body("summary").notEmpty().withMessage("Summary is required").trim()
+  .isLength({ min: 10, max: 300 }).withMessage("Summary must be between 10 and 300 characters long"),
+  body("content").notEmpty().withMessage("Content is required").trim()
+  .isLength({ min: 20 }).withMessage("Content must be at least 20 characters long"),
+  body("published").optional().isBoolean().withMessage("Published must be a boolean"),
+];
 
 // Display Admin Dashboard
 exports.getDashboard = async (req, res) => {
@@ -68,24 +78,26 @@ exports.getCreatePost = (req, res) => {
 };
 
 // Handle the creation of a new post
-exports.postCreatePost = async (req, res) => {
-  const { title, summary, content, published } = req.body;
-  const slug = slugify(title, { lower: true, strict: true });
-
-  // Validate input (to be improved with a express-validator)
-  if (!title || !content || !slug || !summary) {
-    req.flash('error_msg', 'All fields are required');
+exports.postCreatePost = [...postValidation, async (req, res) => {
+  // Validate the request body and return errors if any
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errorMessages = errors.array().map(error => error.msg).join(', '); // Extract & join error messages
+    console.error('Validation errors: ', errorMessages);
+    req.flash('error_msg', errorMessages); // Flash error messages to the user
     return res.redirect('/admin/posts/create');
   }
 
   try {
     // Create a new post
+    const { title, summary, content, published } = req.body;
+    const slug = slugify(title, { lower: true, strict: true });
     const newPost = new Post({
       title,
       slug,
       summary,
       content,
-      published: published === 'on', // Convert to boolean
+      published: published === 'on' || published == true, // Convert to boolean for both form and API submissions
       author: req.user.id,
       createdAt: new Date(),
       updatedAt: new Date()
@@ -99,7 +111,7 @@ exports.postCreatePost = async (req, res) => {
     req.flash('error_msg', 'Error creating post' + error.message);
     res.redirect('/admin/posts/create');
   }
-}
+}];
 
 // Display the form to edit a post
 exports.getEditPost = async (req, res) => {
@@ -129,21 +141,28 @@ exports.getEditPost = async (req, res) => {
 }
 
 // Handle the update of a post
-exports.postEditPost = async (req, res) => {
+exports.postEditPost = [...postValidation, async (req, res) => {
+  const postId = req.params.id;
+
+  // Validate the request body and return errors if any
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errorMessages = errors.array().map(error => error.msg).join(', ');
+    console.error('Validation errors: ', errorMessages);
+    req.flash('error_msg', errorMessages);
+    return res.redirect(`/admin/posts/edit/${postId}`);
+  }
+
   try {
     // Fetch the post to edit
-    const postId = req.params.id;
+    const { title, summary, content, published } = req.body;
+    const slug = slugify(req.body.title, { lower: true, strict: true });
     const post = await Post.findById(postId);
     if (!post) {
       req.flash('error_msg', 'Post not found');
       return res.redirect('/admin/posts');
     }
-    // Validate input (to be improved with a express-validator)
-    const { title, summary, content, published } = req.body;
-    if (!title || !content || !slug || !summary) {
-      req.flash('error_msg', 'All fields are required');
-      return res.redirect(`/admin/posts/edit/${postId}`);
-    }
+
     // Update the post
     await Post.findByIdAndUpdate(postId, {
       ...Post[postId],
@@ -151,7 +170,7 @@ exports.postEditPost = async (req, res) => {
       slug,
       summary,
       content,
-      published: published === 'on', // Convert to boolean
+      published: published === 'on' || published == true,
       updatedAt: new Date()
     });
     await post.save();
@@ -163,7 +182,7 @@ exports.postEditPost = async (req, res) => {
     req.flash('error_msg', 'Error updating post' + error.message);
     res.redirect(`/admin/posts/edit/${postId}`);
   }
-}
+}];
 
 // Handle the deletion of a post
 exports.postDeletePost = async (req, res) => {

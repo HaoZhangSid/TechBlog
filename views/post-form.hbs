@@ -36,7 +36,9 @@
         <input 
           type="text" 
           id="title" 
-          name="title" 
+          name="title"
+          minlength="5"
+          maxlength="100"
           value="{{post.title}}" 
           class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
           placeholder="Enter post title"
@@ -69,9 +71,11 @@
         <label for="summary" class="block text-sm font-medium text-gray-300 mb-2">Summary</label>
         <textarea 
           id="summary" 
-          name="summary" 
+          name="summary"
+          minlength="10"
+          maxlength="300"
+          rows="4"
           class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
-          rows="4" 
           placeholder="Enter a brief summary of the post"
           required 
           aria-describedby="summary-error"
@@ -85,9 +89,10 @@
         <label for="content" class="block text-sm font-medium text-gray-300 mb-2">Content</label>
         <textarea 
           id="content" 
-          name="content" 
-          class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
+          name="content"
+          minlength="20"
           rows="20"
+          class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
           placeholder="Write your post content here"
           required 
           aria-describedby="content-error"
@@ -106,7 +111,7 @@
             {{#if post.published}}checked{{/if}} 
             class="h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-gray-600 rounded bg-gray-900"
           >
-          <span class="ml-2 text-sm text-gray-300">Published</span>
+          <span class="ml-2 text-sm text-gray-300">Publish now</span>
         </label>
       </div>
       <!-- Submit button -->
@@ -120,7 +125,7 @@
   </div>
 </div>
 
-<!-- Scripts for slug generation from title -->
+<!-- Scripts for real-time slug generation from title -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
   const titleInput = document.getElementById('title');
