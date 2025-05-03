@@ -12,7 +12,9 @@ const postValidation = [
   .isLength({ min: 10, max: 300 }).withMessage("Summary must be between 10 and 300 characters long"),
   body("content").notEmpty().withMessage("Content is required").trim()
   .isLength({ min: 20 }).withMessage("Content must be at least 20 characters long"),
-  body("published").optional().isBoolean().withMessage("Published must be a boolean"),
+  body("published").optional()
+  .customSanitizer(value => value === 'on' || value === true) // Convert to boolean for both form and API submissions
+  .isBoolean().withMessage("Published must be a boolean")
 ];
 
 // Display Admin Dashboard
@@ -97,7 +99,7 @@ exports.postCreatePost = [...postValidation, async (req, res) => {
       slug,
       summary,
       content,
-      published: published === 'on' || published == true, // Convert to boolean for both form and API submissions
+      published: published === 'on' || published == true,
       author: req.user.id,
       createdAt: new Date(),
       updatedAt: new Date()

@@ -33,13 +33,13 @@
       <!-- Title input -->
       <div class="mb-6">
         <label for="title" class="block text-sm font-medium text-gray-300 mb-2">Title</label>
-        <input 
-          type="text" 
-          id="title" 
+        <input
+          type="text"
+          id="title"
           name="title"
           minlength="5"
           maxlength="100"
-          value="{{post.title}}" 
+          value="{{post.title}}"
           class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
           placeholder="Enter post title"
           required 
@@ -52,11 +52,11 @@
       <!-- Slug input -->
       <div class="mb-6">
         <label for="slug" class="block text-sm font-medium text-gray-300 mb-2">Slug</label>
-        <input 
-          type="text" 
-          id="slug" 
-          name="slug" 
-          value="{{post.slug}}" 
+        <input
+          type="text"
+          id="slug"
+          name="slug"
+          value="{{post.slug}}"
           class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
           placeholder="my-new-post"
           required 
@@ -69,8 +69,8 @@
       <!-- Summary input -->
       <div class="mb-6">
         <label for="summary" class="block text-sm font-medium text-gray-300 mb-2">Summary</label>
-        <textarea 
-          id="summary" 
+        <textarea
+          id="summary"
           name="summary"
           minlength="10"
           maxlength="300"
@@ -87,8 +87,8 @@
       <!-- Content input -->
       <div class="mb-6">
         <label for="content" class="block text-sm font-medium text-gray-300 mb-2">Content</label>
-        <textarea 
-          id="content" 
+        <textarea
+          id="content"
           name="content"
           minlength="20"
           rows="20"
@@ -104,23 +104,31 @@
       <!-- Published checkbox -->
       <div class="mb-6">
         <label for="published" class="inline-flex items-center">
-          <input 
-            type="checkbox" 
-            id="published" 
-            name="published" 
-            {{#if post.published}}checked{{/if}} 
+          <input
+            type="checkbox"
+            id="published"
+            name="published"
+            {{#if post.published}}checked{{/if}}
             class="h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-gray-600 rounded bg-gray-900"
           >
           <span class="ml-2 text-sm text-gray-300">Publish now</span>
         </label>
       </div>
-      <!-- Submit button -->
-      <button 
-        type="submit" 
-        class="inline-flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500"
-      >
-        {{#if post}}Update Post{{else}}Create Post{{/if}}
-      </button>
+      <!-- Buttons -->
+      <div class="flex justify-end space-x-4">
+        <a 
+          href="/admin/posts" 
+          class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-md transition-colors"
+        >
+          Cancel
+        </a>
+        <button 
+          type="submit"
+          class="inline-flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500"
+        >
+          {{#if post}}Update Post{{else}}Create Post{{/if}}
+        </button>
+      </div>
     </form>
   </div>
 </div>
