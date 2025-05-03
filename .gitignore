@@ -11,7 +11,7 @@ yarn-error.log*
 lerna-debug.log*
 
 # Build output
-/public/css/styles.css
+# /public/css/styles.css
 
 # OS generated files
 .DS_Store
