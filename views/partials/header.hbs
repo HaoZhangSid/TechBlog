@@ -5,7 +5,7 @@
 </a>
 
 {{#if isAdminPage}}
-<!-- Admin Header - Dark Theme -->
+<!-- ADMIN HEADER -->
 <header class="bg-gray-800 border-b border-gray-700 h-16 flex items-center" role="banner">
   <div class="container mx-auto px-4 flex items-center justify-between h-full">
     <!-- Logo and main nav -->
@@ -33,7 +33,8 @@
     <div class="flex items-center h-full">
       <!-- Mobile menu toggle -->
       <button 
-        type="button" 
+        type="button"
+        id="mobile-menu-toggle"
         aria-controls="mobile-menu"
         aria-expanded="false"
         class="md:hidden min-h-[44px] min-w-[44px] p-2 rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
@@ -97,47 +98,106 @@
     </a>
   </div>
 </div>
+
 {{else}}
-<!-- Regular User Header -->
+<!-- REGULAR USER HEADER -->
 <header class="bg-gray-800 border-b border-gray-700 h-16 flex items-center" role="banner">
   <div class="container mx-auto px-4 flex items-center justify-between h-full">
-    <a href="/" class="text-2xl font-bold text-white hover:text-gray-200 transition-colors flex items-center min-h-[44px]">
-      Tech<span class="text-cyan-500">Blog</span>
-    </a>
-    
-    <nav aria-label="Main navigation" class="h-full">
-      <ul class="flex space-x-6 h-full">
-        <li class="flex items-center">
-          <a href="/" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isHomePage}}page{{/if}}">Home</a>
-        </li>
-        <li class="flex items-center">
-          <a href="/about" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isAboutPage}}page{{/if}}">About</a>
-        </li>
-        {{#if user}}
+    <!-- Logo and main nav-->
+    <div class="flex items-center space-x-8 h-full">
+      <a href="/" class="text-2xl font-bold text-white hover:text-gray-200 transition-colors flex items-center min-h-[44px]">
+        Tech<span class="text-cyan-500">Blog</span>
+      </a>
+      
+      <nav aria-label="Main navigation" class="hidden md:block h-full">
+        <ul class="flex space-x-6 h-full">
           <li class="flex items-center">
-            <a href="/admin/dashboard" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">Dashboard</a>
+            <a href="/" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isHomePage}}page{{/if}}">Home</a>
           </li>
-          {{!-- Add logout button/link for logged-in users --}}
           <li class="flex items-center">
-            <form action="/logout" method="POST" class="h-full">
-              <button type="submit" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md h-full">
-                Logout
+            <a href="/about" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isAboutPage}}page{{/if}}">About</a>
+          </li>
+          {{#if user}}
+            <li class="flex items-center">
+              <a href="/admin/dashboard" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">Dashboard</a>
+            </li>
+          {{/if}}
+        </ul>
+      </nav>
+    </div>
+
+    <!-- User menu -->
+    <div class="flex items-center h-full" id="user-menu">
+      <!-- Mobile menu toggle -->
+      <button
+        type="button"
+        id="mobile-menu-toggle"
+        aria-controls="mobile-menu"
+        aria-expanded="false"
+        class="md:hidden min-h-[44px] min-w-[44px] p-2 rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+        <span class="sr-only">Open main menu</span>
+        <!-- Icon when menu is closed -->
+        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+        <!-- Icon when menu is open -->
+        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <!-- User profile dropdown -->
+      {{#if user}}
+        <div class="relative h-full flex items-center">
+          <button class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md px-3 py-2 min-h-[44px] min-w-[44px]" id="user-menu-button" aria-haspopup="true" aria-expanded="false">
+            <div class="w-8 h-8 rounded-full bg-cyan-600 flex items-center justify-center text-white font-medium">
+              {{user.initials}} {{!-- Assuming user object has initials --}}
+            </div>
+            <span class="text-gray-300 hidden sm:inline">
+              {{user.name}} {{!-- Assuming user object has name --}}
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+            </svg>
+          </button>
+
+          <!-- Dropdown menu -->
+          {{!-- Add logout button/link for logged-in users --}}
+          <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg py-1 z-10 hidden" id="user-dropdown-menu" style="top: 100%;"> {{!-- Position dropdown below button --}}
+            <form action="/logout" method="POST" class="block">
+              <button type="submit" class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors min-h-[44px]">
+                Sign out
               </button>
             </form>
-          </li>
-        {{else}}
-          <li class="flex items-center">
-            <a href="/login" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">Login</a>
-          </li>
-        {{/if}}
-      </ul>
-    </nav>
+          </div>
+        </div>
+      {{else}}
+        <a href="/login" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">
+        Login</a>
+      {{/if}}
+    </div>
   </div>
 </header>
+
+<!-- Mobile menu (hidden by default) -->
+<div class="md:hidden bg-gray-800 border-b border-gray-700 hidden" id="mobile-menu">
+  <div class="container mx-auto px-4 py-3 space-y-1">
+    <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+      Home
+    </a>
+    <a href="/about" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+      About
+    </a>
+    {{#if user}}
+      <a href="/admin/dashboard" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+        Dashboard
+      </a>
+    {{/if}}
+  </div>
+</div>
 {{/if}}
 
 <!-- Script for mobile menu toggle and user dropdown -->
-{{#if isAdminPage}}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // Mobile menu toggle
@@ -196,4 +256,4 @@
     }
   });
 </script>
-{{/if}} 
+{{! End of header.hbs }}
