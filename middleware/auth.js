@@ -12,13 +12,4 @@ module.exports = {
     res.redirect('/login');
     return; // Added return here to stop execution after redirect
   },
-
-  // Ensure user is NOT authenticated (e.g., for login/register pages)
-  isGuest: function(req, res, next) {
-    if (!req.isAuthenticated()) {
-      return next();
-    }
-    console.log('Auth Middleware: Authenticated user trying to access guest route, redirecting to /admin/dashboard');
-    res.redirect('/admin/dashboard'); // Or perhaps '/' depending on desired flow
-  }
 }; 

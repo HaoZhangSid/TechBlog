@@ -76,3 +76,46 @@ EMAIL_USER=your.email@gmail.com
 EMAIL_PASS=your_gmail_app_password
 EMAIL_FROM=your.email@gmail.com
 ```
+
+## Initial Admin Setup
+
+To create the initial administrator account, run the following command in your terminal after setting up your `.env` file:
+
+```bash
+npm run init-admin
+```
+
+This script will create a default admin user if one doesn't already exist with the following credentials:
+
+*   **Email:** `dexter199057@gmail.com`
+*   **Password:** `qwer1234`
+
+**Important:** For security reasons, log in with these default credentials immediately after running the script and **change the password** through the appropriate admin interface (if available) or directly in the database.
+
+## API Endpoints
+
+### Public Routes
+
+*   `GET /`: Displays the homepage with a list of published posts.
+*   `GET /post/:slug`: Displays the detail page for a single post.
+*   `GET /about`: Displays the about page.
+
+### Authentication Routes
+
+*   `GET /login`: Displays the login form.
+*   `POST /login`: Handles user login attempts.
+*   `GET /forgot-password`: Displays the forgot password form.
+*   `POST /forgot-password`: Handles the request to send a password reset email.
+*   `GET /reset-password/:token`: Displays the password reset form (requires a valid token).
+*   `POST /reset-password/:token`: Handles the submission of the new password.
+*   `POST /logout`: Logs the user out.
+
+### Admin Routes (Require Authentication)
+
+*   `GET /admin/dashboard`: Displays the admin dashboard.
+*   `GET /admin/posts`: Displays a list of all posts.
+*   `GET /admin/posts/create`: Displays the form to create a new post.
+*   `POST /admin/posts/create`: Handles the creation of a new post.
+*   `GET /admin/posts/edit/:id`: Displays the form to edit an existing post.
+*   `POST /admin/posts/edit/:id`: Handles the update of an existing post.
+*   `POST /admin/posts/delete/:id`: Handles the deletion of a post.
