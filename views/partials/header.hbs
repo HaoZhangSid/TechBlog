@@ -30,7 +30,7 @@
     </div>
     
     <!-- User menu -->
-    <div class="flex items-center h-full">
+    <div class="flex items-center h-full" id="user-menu">
       <!-- Mobile menu toggle -->
       <button 
         type="button"
@@ -50,8 +50,9 @@
       </button>
       
       <!-- User profile dropdown -->
-      <div class="relative h-full flex items-center" id="user-menu">
-        <button class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md px-3 py-2 min-h-[44px] min-w-[44px]" id="user-menu-button" aria-haspopup="true" aria-expanded="false">
+      <div class="relative h-full flex items-center">
+        <button class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md px-3 py-2 min-h-[44px] min-w-[44px]" id="user-menu-button" aria-controls="user-dropdown-menu" aria-haspopup="true" aria-expanded="false">
+          {{!-- User initials or avatar --}}
           <div class="w-8 h-8 rounded-full bg-cyan-600 flex items-center justify-center text-white font-medium">
             {{#if user}}
               {{user.initials}} {{!-- Assuming user object has initials --}}
@@ -72,9 +73,9 @@
         </button>
         
         <!-- Dropdown menu -->
-        <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg py-1 z-10 hidden" id="user-dropdown-menu" style="top: 100%;"> {{!-- Position dropdown below button --}}
+        <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg py-1 z-10 hidden" id="user-dropdown-menu" tabindex="-1" role="menu" aria-labelledby="user-menu-button" style="top: 100%;"> {{!-- Position dropdown below button --}}
           <form action="/logout" method="POST" class="block">
-            <button type="submit" class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors min-h-[44px]">
+            <button type="submit" class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" role="menuitem">
               Sign out
             </button>
           </form>
@@ -87,13 +88,13 @@
 <!-- Mobile menu (hidden by default) -->
 <div class="md:hidden bg-gray-800 border-b border-gray-700 hidden" id="mobile-menu">
   <div class="container mx-auto px-4 py-3 space-y-1">
-    <a href="/admin/dashboard" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+    <a href="/admin/dashboard" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
       Dashboard
     </a>
-    <a href="/admin/posts" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+    <a href="/admin/posts" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
       Posts
     </a>
-    <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+    <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
       View Site
     </a>
   </div>
@@ -149,7 +150,8 @@
       <!-- User profile dropdown -->
       {{#if user}}
         <div class="relative h-full flex items-center">
-          <button class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md px-3 py-2 min-h-[44px] min-w-[44px]" id="user-menu-button" aria-haspopup="true" aria-expanded="false">
+          <button class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md px-3 py-2 min-h-[44px] min-w-[44px]" id="user-menu-button" aria-controls="user-dropdown-menu" aria-haspopup="true" aria-expanded="false">
+            {{!-- User initials or avatar --}}
             <div class="w-8 h-8 rounded-full bg-cyan-600 flex items-center justify-center text-white font-medium">
               {{user.initials}} {{!-- Assuming user object has initials --}}
             </div>
@@ -163,9 +165,9 @@
 
           <!-- Dropdown menu -->
           {{!-- Add logout button/link for logged-in users --}}
-          <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg py-1 z-10 hidden" id="user-dropdown-menu" style="top: 100%;"> {{!-- Position dropdown below button --}}
+          <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg py-1 z-10 hidden" id="user-dropdown-menu" tabindex="-1" role="menu" aria-labelledby="user-menu-button" style="top: 100%;"> {{!-- Position dropdown below button --}}
             <form action="/logout" method="POST" class="block">
-              <button type="submit" class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors min-h-[44px]">
+              <button role="menuitem" type="submit" class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">
                 Sign out
               </button>
             </form>
@@ -182,14 +184,14 @@
 <!-- Mobile menu (hidden by default) -->
 <div class="md:hidden bg-gray-800 border-b border-gray-700 hidden" id="mobile-menu">
   <div class="container mx-auto px-4 py-3 space-y-1">
-    <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+    <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
       Home
     </a>
-    <a href="/about" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+    <a href="/about" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
       About
     </a>
     {{#if user}}
-      <a href="/admin/dashboard" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px]">
+      <a href="/admin/dashboard" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
         Dashboard
       </a>
     {{/if}}
@@ -250,9 +252,6 @@
           isOpen = false;
         }
       });
-      
-      // Removed hover logic for simplicity and better accessibility
-      // Focus management can be added later if needed
     }
   });
 </script>
