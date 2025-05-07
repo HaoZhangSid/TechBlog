@@ -86,20 +86,81 @@
       </div>
       <!-- Content input -->
       <div class="mb-6">
-        <label for="content" class="block text-sm font-medium text-gray-300 mb-2">Content</label>
-        <textarea
-          id="content"
-          name="content"
-          minlength="20"
-          rows="20"
-          class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-          placeholder="Write your post content here"
-          required 
-          aria-describedby="content-error"
-        >{{post.content}}</textarea>
+        <!-- Added preview toggle header -->
+        <div class="flex justify-between items-center mb-2">
+          <label for="content" class="block text-sm font-medium text-gray-300">
+            Content
+            <span class="text-gray-500 text-xs ml-1">(Markdown supported)</span>
+          </label>
+          <div class="text-sm text-gray-400 flex items-center">
+            <span class="mr-2">Markdown</span>
+            <button 
+              type="button"
+              id="previewToggle"
+              class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-md text-cyan-400 text-xs font-medium transition-colors"
+            >
+              Preview
+            </button>
+          </div>
+        </div>
+        
+        <!-- Markdown Editor and Preview Container -->
+        <div id="editorContainer" class="relative">
+          <!-- Editor Area -->
+          <div id="editor" class="block">
+            <textarea
+              id="content"
+              name="content"
+              minlength="20"
+              rows="20"
+              class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+              placeholder="Write your post content here"
+              required 
+              aria-describedby="content-error"
+            >{{{post.content}}}</textarea> {{!-- Use triple braces for raw HTML --}}
+          </div>
+          
+          <!-- Preview Area (hidden by default) -->
+          <div id="preview" class="hidden p-4 bg-gray-900 border border-gray-700 rounded-md h-[calc(20*1.5rem+1.5rem)] overflow-y-auto">
+            <div id="previewContent" class="prose prose-invert max-w-none">
+              {{!-- Preview content will be injected here by JavaScript --}}
+            </div>
+          </div>
+        </div>
+
         {{#if errors.content}}
           <p id="content-error" class="text-red-500 text-sm mt-1">{{errors.content.msg}}</p>
         {{/if}}
+      </div>
+      <!-- Added Markdown quick reference -->
+      <div class="mt-2 p-3 bg-gray-800 rounded-md border border-gray-700">
+        <h4 class="text-sm font-medium text-gray-300 mb-2">Markdown Reference:</h4>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-gray-400">
+          <div>
+            <code class="text-cyan-400"># Heading 1</code>
+          </div>
+          <div>
+            <code class="text-cyan-400">**Bold**</code>
+          </div>
+          <div>
+            <code class="text-cyan-400">[Link](url)</code>
+          </div>
+          <div>
+            <code class="text-cyan-400">![Image](url)</code>
+          </div>
+          <div>
+            <code class="text-cyan-400">```code```</code>
+          </div>
+          <div>
+            <code class="text-cyan-400">- List item</code>
+          </div>
+          <div>
+            <code class="text-cyan-400">> Quote</code>
+          </div>
+          <div>
+            <code class="text-cyan-400">---</code> (HR)
+          </div>
+        </div>
       </div>
       <!-- Published checkbox -->
       <div class="mb-6">
@@ -153,4 +214,84 @@
     });
   }
 });
+</script>
+
+<!-- Added JavaScript for Markdown preview -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const contentTextarea = document.getElementById('content');
+    const previewToggle = document.getElementById('previewToggle');
+    const editorArea = document.getElementById('editor');
+    const previewArea = document.getElementById('preview');
+    const previewContent = document.getElementById('previewContent');
+
+    // Ensure elements exist
+    if (!contentTextarea || !previewToggle || !editorArea || !previewArea || !previewContent) {
+      console.error('Markdown preview elements not found.');
+      return;
+    }
+
+    // Check if marked library is available (included in main.hbs layout)
+    if (typeof marked !== 'undefined') {
+
+      // Configure marked options
+      marked.setOptions({
+        headerIds: false,
+        breaks: true,
+        gfm: true
+      });
+
+      let isPreviewMode = false;
+
+      previewToggle.addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent form submission
+
+        isPreviewMode = !isPreviewMode;
+
+        if (isPreviewMode) {
+          // Render markdown using marked library
+          try {
+            const rawMarkdown = contentTextarea.value;
+            const htmlContent = marked.parse(rawMarkdown);
+            previewContent.innerHTML = htmlContent;
+
+            // Apply syntax highlighting if hljs is available
+            if (typeof hljs !== 'undefined') {
+              document.querySelectorAll('#previewContent pre code').forEach((block) => {
+                hljs.highlightBlock(block);
+              });
+            }
+
+            // Show preview area, hide edit area
+            editorArea.classList.add('hidden');
+            previewArea.classList.remove('hidden');
+            previewToggle.textContent = 'Edit';
+          } catch (error) {
+            console.error('Error rendering Markdown preview:', error);
+            // Optionally show an error message in the preview area
+            previewContent.innerHTML = '<p style="color: red;">Error rendering preview.</p>';
+            editorArea.classList.add('hidden');
+            previewArea.classList.remove('hidden');
+            previewToggle.textContent = 'Edit';
+          }
+        } else {
+          // Show editing area, hide preview area
+          editorArea.classList.remove('hidden');
+          previewArea.classList.add('hidden');
+          previewToggle.textContent = 'Preview';
+        }
+      });
+
+      // Optional: Update preview on textarea input (debounced for performance on large content)
+      // This part is more complex and might not be needed for a basic requirement.
+      // You could add a debounce function here if real-time updating is desired.
+
+    } else {
+      console.error('Marked library not available for preview.');
+      // If the marked library is not available, disable the preview button
+      previewToggle.disabled = true;
+      previewToggle.classList.add('opacity-50', 'cursor-not-allowed');
+      previewToggle.textContent = 'Preview (Disabled)';
+    }
+  });
 </script>

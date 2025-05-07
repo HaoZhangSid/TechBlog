@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{title}} - Admin - My Blog</title> {{!-- Admin specific title --}}
   <link rel="stylesheet" href="/css/styles.css"> {{!-- Link to compiled CSS --}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css"> {{!-- Highlight.js Dark Theme --}}
   <script>document.documentElement.classList.remove('no-js');</script> {{!-- Basic JS check --}}
 </head>
 <body class="bg-gray-900"> {{!-- Set dark background for admin area body --}}
@@ -47,5 +48,10 @@
   {{!-- {{> common-scripts}} --}}
   
   {{!-- Add any page-specific scripts here if needed --}}
+  <script src="
+https://cdn.jsdelivr.net/npm/marked@15.0.11/lib/marked.umd.min.js
+"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script> {{!-- Highlight.js for syntax highlighting --}}
 </body>
 </html> 
