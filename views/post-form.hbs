@@ -2,195 +2,197 @@
 
 <div class="min-h-screen bg-gray-900 text-gray-100 pb-12">
   <div class="container mx-auto px-4 py-8 max-w-6xl">
-    <!-- Subheader section -->
-    <h1 class="text-3xl font-bold text-white mb-8">
-      {{#if post}}Edit Post{{else}}Write New Post{{/if}}
-    </h1>
+    <main id="main-content" role="main">
+      <!-- Subheader section -->
+      <h1 class="text-3xl font-bold text-white mb-8">
+        {{#if post}}Edit Post{{else}}Write New Post{{/if}}
+      </h1>
 
-    <!-- Flash Messages -->
-    {{#if success_msg}}
-      <div class="bg-green-100 text-green-800 p-4 mb-6 rounded-lg border border-green-300" role="alert" aria-live="polite">
-        {{success_msg}}
-      </div>
-    {{/if}}
-    {{#if error_msg}}
-      <div class="bg-red-100 text-red-800 p-4 mb-6 rounded-lg border border-red-300" role="alert" aria-live="polite">
-        {{error_msg}}
-      </div>
-    {{/if}}
-    {{#if errors}}
-      <div class="bg-red-100 text-red-800 p-4 mb-6 rounded-lg border border-red-300" role="alert" aria-live="polite">
-        <ul>
-          {{#each errors}}
-            <li>{{this.msg}}</li>
-          {{/each}}
-        </ul>
-      </div>
-    {{/if}}
-
-    <!-- Post Form -->
-    <form action="{{#if post}}/admin/posts/edit/{{post._id}}{{else}}/admin/posts/create{{/if}}" method="POST" class="bg-gray-800 rounded-lg border border-gray-700 p-6 shadow-lg">
-      <!-- Title input -->
-      <div class="mb-6">
-        <label for="title" class="block text-sm font-medium text-gray-300 mb-2">Title</label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          minlength="5"
-          maxlength="100"
-          value="{{post.title}}"
-          class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
-          placeholder="Enter post title"
-          required 
-          aria-describedby="title-error"
-        >
-        {{#if errors.title}}
-          <p id="title-error" class="text-red-500 text-sm mt-1">{{errors.title.msg}}</p>
-        {{/if}}
-      </div>
-      <!-- Slug input -->
-      <div class="mb-6">
-        <label for="slug" class="block text-sm font-medium text-gray-300 mb-2">Slug</label>
-        <input
-          type="text"
-          id="slug"
-          name="slug"
-          value="{{post.slug}}"
-          class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
-          placeholder="my-new-post"
-          required 
-          aria-describedby="slug-error"
-        >
-        {{#if errors.slug}}
-          <p id="slug-error" class="text-red-500 text-sm mt-1">{{errors.slug.msg}}</p>
-        {{/if}}
-      </div>
-      <!-- Summary input -->
-      <div class="mb-6">
-        <label for="summary" class="block text-sm font-medium text-gray-300 mb-2">Summary</label>
-        <textarea
-          id="summary"
-          name="summary"
-          minlength="10"
-          maxlength="300"
-          rows="4"
-          class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
-          placeholder="Enter a brief summary of the post"
-          required 
-          aria-describedby="summary-error"
-        >{{post.summary}}</textarea>
-        {{#if errors.summary}}
-          <p id="summary-error" class="text-red-500 text-sm mt-1">{{errors.summary.msg}}</p>
-        {{/if}}
-      </div>
-      <!-- Content input -->
-      <div class="mb-6">
-        <!-- Added preview toggle header -->
-        <div class="flex justify-between items-center mb-2">
-          <label for="content" class="block text-sm font-medium text-gray-300">
-            Content
-            <span class="text-gray-500 text-xs ml-1">(Markdown supported)</span>
-          </label>
-          <div class="text-sm text-gray-400 flex items-center">
-            <span class="mr-2">Markdown</span>
-            <button 
-              type="button"
-              id="previewToggle"
-              class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-md text-cyan-400 text-xs font-medium transition-colors"
-            >
-              Preview
-            </button>
-          </div>
+      <!-- Flash Messages -->
+      {{#if success_msg}}
+        <div class="bg-green-100 text-green-800 p-4 mb-6 rounded-lg border border-green-300" role="alert" aria-live="polite">
+          {{success_msg}}
         </div>
-        
-        <!-- Markdown Editor and Preview Container -->
-        <div id="editorContainer" class="relative">
-          <!-- Editor Area -->
-          <div id="editor" class="block">
-            <textarea
-              id="content"
-              name="content"
-              minlength="20"
-              rows="20"
-              class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
-              placeholder="Write your post content here"
-              required 
-              aria-describedby="content-error"
-            >{{{post.content}}}</textarea> {{!-- Use triple braces for raw HTML --}}
+      {{/if}}
+      {{#if error_msg}}
+        <div class="bg-red-100 text-red-800 p-4 mb-6 rounded-lg border border-red-300" role="alert" aria-live="polite">
+          {{error_msg}}
+        </div>
+      {{/if}}
+      {{#if errors}}
+        <div class="bg-red-100 text-red-800 p-4 mb-6 rounded-lg border border-red-300" role="alert" aria-live="polite">
+          <ul>
+            {{#each errors}}
+              <li>{{this.msg}}</li>
+            {{/each}}
+          </ul>
+        </div>
+      {{/if}}
+
+      <!-- Post Form -->
+      <form action="{{#if post}}/admin/posts/edit/{{post._id}}{{else}}/admin/posts/create{{/if}}" method="POST" class="bg-gray-800 rounded-lg border border-gray-700 p-6 shadow-lg">
+        <!-- Title input -->
+        <div class="mb-6">
+          <label for="title" class="block text-sm font-medium text-gray-300 mb-2">Title</label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            minlength="5"
+            maxlength="100"
+            value="{{post.title}}"
+            class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
+            placeholder="Enter post title"
+            required 
+            aria-describedby="title-error"
+          >
+          {{#if errors.title}}
+            <p id="title-error" class="text-red-500 text-sm mt-1">{{errors.title.msg}}</p>
+          {{/if}}
+        </div>
+        <!-- Slug input -->
+        <div class="mb-6">
+          <label for="slug" class="block text-sm font-medium text-gray-300 mb-2">Slug</label>
+          <input
+            type="text"
+            id="slug"
+            name="slug"
+            value="{{post.slug}}"
+            class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
+            placeholder="my-new-post"
+            required 
+            aria-describedby="slug-error"
+          >
+          {{#if errors.slug}}
+            <p id="slug-error" class="text-red-500 text-sm mt-1">{{errors.slug.msg}}</p>
+          {{/if}}
+        </div>
+        <!-- Summary input -->
+        <div class="mb-6">
+          <label for="summary" class="block text-sm font-medium text-gray-300 mb-2">Summary</label>
+          <textarea
+            id="summary"
+            name="summary"
+            minlength="10"
+            maxlength="300"
+            rows="4"
+            class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
+            placeholder="Enter a brief summary of the post"
+            required 
+            aria-describedby="summary-error"
+          >{{post.summary}}</textarea>
+          {{#if errors.summary}}
+            <p id="summary-error" class="text-red-500 text-sm mt-1">{{errors.summary.msg}}</p>
+          {{/if}}
+        </div>
+        <!-- Content input -->
+        <div class="mb-6">
+          <!-- Added preview toggle header -->
+          <div class="flex justify-between items-center mb-2">
+            <label for="content" class="block text-sm font-medium text-gray-300">
+              Content
+              <span class="text-gray-500 text-xs ml-1">(Markdown supported)</span>
+            </label>
+            <div class="text-sm text-gray-400 flex items-center">
+              <span class="mr-2">Markdown</span>
+              <button 
+                type="button"
+                id="previewToggle"
+                class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-md text-cyan-400 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
+              >
+                Preview
+              </button>
+            </div>
           </div>
           
-          <!-- Preview Area (hidden by default) -->
-          <div id="preview" class="hidden p-4 bg-gray-900 border border-gray-700 rounded-md h-[calc(20*1.5rem+1.5rem)] overflow-y-auto">
-            <div id="previewContent" class="prose prose-invert max-w-none">
-              {{!-- Preview content will be injected here by JavaScript --}}
+          <!-- Markdown Editor and Preview Container -->
+          <div id="editorContainer" class="relative">
+            <!-- Editor Area -->
+            <div id="editor" class="block">
+              <textarea
+                id="content"
+                name="content"
+                minlength="20"
+                rows="20"
+                class="w-full px-4 py-2 bg-gray-900 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500"
+                placeholder="Write your post content here"
+                required 
+                aria-describedby="content-error"
+              >{{{post.content}}}</textarea> {{!-- Use triple braces for raw HTML --}}
+            </div>
+            
+            <!-- Preview Area (hidden by default) -->
+            <div id="preview" class="hidden p-4 bg-gray-900 border border-gray-700 rounded-md h-[calc(20*1.5rem+1.5rem)] overflow-y-auto">
+              <div id="previewContent" class="prose prose-invert max-w-none">
+                {{!-- Preview content will be injected here by JavaScript --}}
+              </div>
+            </div>
+          </div>
+
+          {{#if errors.content}}
+            <p id="content-error" class="text-red-500 text-sm mt-1">{{errors.content.msg}}</p>
+          {{/if}}
+        </div>
+        <!-- Added Markdown quick reference -->
+        <div class="mt-2 p-3 bg-gray-800 rounded-md border border-gray-700">
+          <p class="text-sm font-medium text-gray-300 mb-2 bold">Markdown Reference:</p>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-gray-400">
+            <div>
+              <code class="text-cyan-400"># Heading 1</code>
+            </div>
+            <div>
+              <code class="text-cyan-400">**Bold**</code>
+            </div>
+            <div>
+              <code class="text-cyan-400">[Link](url)</code>
+            </div>
+            <div>
+              <code class="text-cyan-400">![Image](url)</code>
+            </div>
+            <div>
+              <code class="text-cyan-400">```code```</code>
+            </div>
+            <div>
+              <code class="text-cyan-400">- List item</code>
+            </div>
+            <div>
+              <code class="text-cyan-400">> Quote</code>
+            </div>
+            <div>
+              <code class="text-cyan-400">---</code> (HR)
             </div>
           </div>
         </div>
-
-        {{#if errors.content}}
-          <p id="content-error" class="text-red-500 text-sm mt-1">{{errors.content.msg}}</p>
-        {{/if}}
-      </div>
-      <!-- Added Markdown quick reference -->
-      <div class="mt-2 p-3 bg-gray-800 rounded-md border border-gray-700">
-        <h4 class="text-sm font-medium text-gray-300 mb-2">Markdown Reference:</h4>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-gray-400">
-          <div>
-            <code class="text-cyan-400"># Heading 1</code>
-          </div>
-          <div>
-            <code class="text-cyan-400">**Bold**</code>
-          </div>
-          <div>
-            <code class="text-cyan-400">[Link](url)</code>
-          </div>
-          <div>
-            <code class="text-cyan-400">![Image](url)</code>
-          </div>
-          <div>
-            <code class="text-cyan-400">```code```</code>
-          </div>
-          <div>
-            <code class="text-cyan-400">- List item</code>
-          </div>
-          <div>
-            <code class="text-cyan-400">> Quote</code>
-          </div>
-          <div>
-            <code class="text-cyan-400">---</code> (HR)
-          </div>
+        <!-- Published checkbox -->
+        <div class="mb-6">
+          <label for="published" class="inline-flex items-center">
+            <input
+              type="checkbox"
+              id="published"
+              name="published"
+              {{#if post.published}}checked{{/if}}
+              class="h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-gray-600 rounded bg-gray-900"
+            >
+            <span class="ml-2 text-sm text-gray-300">Publish now</span>
+          </label>
         </div>
-      </div>
-      <!-- Published checkbox -->
-      <div class="mb-6">
-        <label for="published" class="inline-flex items-center">
-          <input
-            type="checkbox"
-            id="published"
-            name="published"
-            {{#if post.published}}checked{{/if}}
-            class="h-4 w-4 text-cyan-600 focus:ring-cyan-500 border-gray-600 rounded bg-gray-900"
+        <!-- Buttons -->
+        <div class="flex justify-end space-x-4">
+          <a 
+            href="/admin/posts" 
+            class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-gray-500"
           >
-          <span class="ml-2 text-sm text-gray-300">Publish now</span>
-        </label>
-      </div>
-      <!-- Buttons -->
-      <div class="flex justify-end space-x-4">
-        <a 
-          href="/admin/posts" 
-          class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-gray-500"
-        >
-          Cancel
-        </a>
-        <button 
-          type="submit"
-          class="inline-flex items-center px-4 py-2 bg-cyan-600 hover:bg-cyan-700 text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500"
-        >
-          {{#if post}}Update Post{{else}}Create Post{{/if}}
-        </button>
-      </div>
-    </form>
+            Cancel
+          </a>
+          <button 
+            type="submit"
+            class="inline-flex items-center px-4 py-2 bg-cyan-700 hover:bg-cyan-700 text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-cyan-500"
+          >
+            {{#if post}}Update Post{{else}}Create Post{{/if}}
+          </button>
+        </div>
+      </form>
+    </main>
   </div>
 </div>
 
