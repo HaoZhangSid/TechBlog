@@ -129,4 +129,4 @@ This script will create a default admin user if one doesn't already exist with t
 *   `DELETE /api/posts/:id`: Delete an existing post by its ID. Authentication required and only the post's author can delete.
 
 ## Web Accessibility
-Please [click here](accessibility-statement_2025-05-08.html) to see our accessibility statement.
+Please [click here](https://techblog-h5axgbbyavc3haat.northeurope-01.azurewebsites.net/accessibility-statement_2025-05-08.html) to see our accessibility statement.
