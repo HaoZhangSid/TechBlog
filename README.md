@@ -127,3 +127,6 @@ This script will create a default admin user if one doesn't already exist with t
 *   `POST /api/posts`: Create a new blog post with an automatically generated slug. Authentication required and validation applied.
 *   `PUT /api/posts/:id`: Update an existing post by its ID. Authentication required and only the post's author can edit.
 *   `DELETE /api/posts/:id`: Delete an existing post by its ID. Authentication required and only the post's author can delete.
+
+## Web Accessibility
+Please [click here](accessibility-statement_2025-05-08.html) to see our accessibility statement.
