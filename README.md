@@ -92,7 +92,7 @@ This script will create a default admin user if one doesn't already exist with t
 
 **Important:** For security reasons, log in with these default credentials immediately after running the script and **change the password** through the appropriate admin interface (if available) or directly in the database.
 
-## API Endpoints
+## CRUD Operations (Web-based)
 
 ### Public Routes
 
@@ -119,3 +119,11 @@ This script will create a default admin user if one doesn't already exist with t
 *   `GET /admin/posts/edit/:id`: Displays the form to edit an existing post.
 *   `POST /admin/posts/edit/:id`: Handles the update of an existing post.
 *   `POST /admin/posts/delete/:id`: Handles the deletion of a post.
+
+## CRUD Operations (API Endpoints)
+*   `GET /api/posts`: Displays a list of all posts, authentication not required.
+*   `GET /api/posts/:id`: Displays a single post by its ID.
+*   `POST /api/login`: Authenticate a user and establish a session for subsequent requests.
+*   `POST /api/posts`: Create a new blog post with an automatically generated slug. Authentication required and validation applied.
+*   `PUT /api/posts/:id`: Update an existing post by its ID. Authentication required and only the post's author can edit.
+*   `DELETE /api/posts/:id`: Delete an existing post by its ID. Authentication required and only the post's author can delete.
