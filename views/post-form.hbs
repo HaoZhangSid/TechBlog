@@ -98,7 +98,7 @@
               <button 
                 type="button"
                 id="previewToggle"
-                class="px-3 py-1 bg-gray-700 hover:bg-gray-600 rounded-md text-cyan-400 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                class="px-3 py-1.5 bg-gray-600 hover:bg-gray-500 rounded-md text-cyan-300 text-xs font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500"
               >
                 Preview
               </button>
@@ -136,36 +136,24 @@
         <!-- Added Markdown quick reference -->
         <div class="mt-2 p-3 bg-gray-800 rounded-md border border-gray-700">
           <p class="text-sm font-medium text-gray-300 mb-2 bold">Markdown Reference:</p>
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs text-gray-400">
-            <div>
-              <code class="text-cyan-400"># Heading 1</code>
-            </div>
-            <div>
-              <code class="text-cyan-400">**Bold**</code>
-            </div>
-            <div>
-              <code class="text-cyan-400">[Link](url)</code>
-            </div>
-            <div>
-              <code class="text-cyan-400">![Image](url)</code>
-            </div>
-            <div>
-              <code class="text-cyan-400">```code```</code>
-            </div>
-            <div>
-              <code class="text-cyan-400">- List item</code>
-            </div>
-            <div>
-              <code class="text-cyan-400">> Quote</code>
-            </div>
-            <div>
-              <code class="text-cyan-400">---</code> (HR)
-            </div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 text-xs text-gray-400">
+            <div><code class="text-cyan-400"># H1</code> / <code class="text-cyan-400">## H2</code></div>
+            <div><code class="text-cyan-400">**Bold**</code> / <code class="text-cyan-400">*Italic*</code></div>
+            <div><code class="text-cyan-400">`Inline code`</code></div>
+            <div><code class="text-cyan-400">```code block```</code></div>
+            <div><code class="text-cyan-400">[Link](url)</code></div>
+            <div><code class="text-cyan-400">![Image](url)</code></div>
+            <div><code class="text-cyan-400">- Unordered</code></div>
+            <div><code class="text-cyan-400">1. Ordered</code></div>
+            <div><code class="text-cyan-400">> Quote</code></div>
+            <div><code class="text-cyan-400">---</code> (HR)</div>
+            {{!-- Optionally add Table if needed --}}
+            {{!-- <div><code class="text-cyan-400">\| Col1 \| Col2 \|</code></div> --}}
           </div>
         </div>
         <!-- Published checkbox -->
         <div class="mb-6">
-          <label for="published" class="inline-flex items-center">
+          <label for="published" class="inline-flex items-center py-2">
             <input
               type="checkbox"
               id="published"
@@ -180,7 +168,7 @@
         <div class="flex justify-end space-x-4">
           <a 
             href="/admin/posts" 
-            class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-gray-500"
+            class="inline-flex items-center px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white text-sm font-medium rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-gray-400"
           >
             Cancel
           </a>
