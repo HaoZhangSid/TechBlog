@@ -68,7 +68,7 @@ The TechBlog team is committed to building an accessible platform compliant with
 
 ---
 
-## 6. (Optional) Demonstration Video Link
+## 6.  Demonstration Video Link
 **Video Link:** [https://www.youtube.com/watch?v=Y4vywFMJUNU](https://www.youtube.com/watch?v=Y4vywFMJUNU)
 
 --- 
