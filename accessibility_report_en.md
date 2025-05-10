@@ -54,7 +54,7 @@ We used Chrome Lighthouse and Siteimprove Accessibility Checker to test and veri
 Issues identified during evaluation, such as initial color contrast deficiencies, were addressed to ensure all components meet requirements.
 
 ### 3.2 Screen Reader Used
-The team primarily used **<font color="red">[Please enter screen reader name used, e.g., NVDA, JAWS, VoiceOver]</font>** to test key user flows, including navigation, reading, login, and form submission.
+The team primarily used NVDA to test key user flows, including navigation, reading, login, and form submission.
 
 ---
 
@@ -69,7 +69,6 @@ The TechBlog team is committed to building an accessible platform compliant with
 ---
 
 ## 6. (Optional) Demonstration Video Link
-**Video Link:** <font color="red">[Please insert link to demonstration video here]</font>
-*(Video includes screen reader audio output)*
+**Video Link:** [https://www.youtube.com/watch?v=Y4vywFMJUNU](https://www.youtube.com/watch?v=Y4vywFMJUNU)
 
 --- 
