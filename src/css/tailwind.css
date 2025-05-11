@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities; 
+
+.hljs-comment {
+    color: #fff !important;
+}
+.hljs-name {
+    color: #fdb7b7 !important;
+}
+.hljs-string {
+    color: #00e0e0;
+}
