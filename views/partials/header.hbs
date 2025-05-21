@@ -1,29 +1,29 @@
 <!-- Universal Header Component -->
 <!-- Skip to main content link for keyboard users -->
-<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-cyan-600 text-white px-4 py-2 rounded-md z-50">
+<a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-accent text-white px-4 py-2 rounded-md z-50 hover:bg-primary dark:hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent dark:focus:ring-offset-background">
   Skip to main content
 </a>
 
 {{#if isAdminPage}}
 <!-- ADMIN HEADER -->
-<header class="bg-gray-800 border-b border-gray-700 h-16 flex items-center" role="banner">
+<header class="bg-background border-b border-borderColor h-16 flex items-center" role="banner">
   <div class="container mx-auto px-4 flex items-center justify-between h-full">
     <!-- Logo and main nav -->
     <div class="flex items-center space-x-8 h-full">
-      <a href="/" class="text-2xl font-bold text-white hover:text-gray-200 transition-colors flex items-center min-h-[44px]">
-        Tech<span class="text-cyan-500">Blog</span>
+      <a href="/" class="text-2xl font-bold text-textColor hover:text-textSecondary transition-colors flex items-center min-h-[44px]">
+        Tech<span class="text-primary">Blog</span>
       </a>
       
       <nav aria-label="Admin navigation" class="hidden md:block h-full">
         <ul class="flex space-x-6 h-full">
           <li class="flex items-center">
-            <a href="/admin/dashboard" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isDashboardPage}}page{{/if}}">Dashboard</a>
+            <a href="/admin/dashboard" class="text-textSecondary hover:text-textColor transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-accent rounded-md" aria-current="{{#if isDashboardPage}}page{{/if}}">Dashboard</a>
           </li>
           <li class="flex items-center">
-            <a href="/admin/posts" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isPostsPage}}page{{/if}}">Posts</a>
+            <a href="/admin/posts" class="text-textSecondary hover:text-textColor transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-accent rounded-md" aria-current="{{#if isPostsPage}}page{{/if}}">Posts</a>
           </li>
           <li class="flex items-center">
-            <a href="/" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">View Site</a>
+            <a href="/" class="text-textSecondary hover:text-textColor transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-accent rounded-md">View Site</a>
           </li>
         </ul>
       </nav>
@@ -31,13 +31,19 @@
     
     <!-- User menu -->
     <div class="flex items-center h-full" id="user-menu">
+      <!-- Theme Switcher Button -->
+      <button id="theme-toggle-button" type="button" class="mr-2 p-2 rounded-md text-textSecondary hover:text-textColor focus:outline-none focus:ring-2 focus:ring-accent hover:bg-cardBackground min-h-[44px] min-w-[44px]">
+        <span class="sr-only">Toggle theme</span>
+        <svg id="theme-icon-light" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-15.66l-.707.707M4.04 19.96l-.707.707M21 12h-1M4 12H3m15.66 8.66l-.707-.707M4.04 4.04l-.707-.707" /> </svg>
+        <svg id="theme-icon-dark" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /> </svg>
+      </button>
       <!-- Mobile menu toggle -->
       <button 
         type="button"
         id="mobile-menu-toggle"
         aria-controls="mobile-menu"
         aria-expanded="false"
-        class="md:hidden min-h-[44px] min-w-[44px] p-2 rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+        class="md:hidden min-h-[44px] min-w-[44px] p-2 rounded-md text-textSecondary hover:text-textColor focus:outline-none focus:ring-2 focus:ring-accent">
         <span class="sr-only">Open main menu</span>
         <!-- Icon when menu is closed -->
         <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -51,31 +57,31 @@
       
       <!-- User profile dropdown -->
       <div class="relative h-full flex items-center">
-        <button class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md px-3 py-2 min-h-[44px] min-w-[44px]" id="user-menu-button" aria-controls="user-dropdown-menu" aria-haspopup="true" aria-expanded="false">
+        <button class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-accent rounded-md px-3 py-2 min-h-[44px] min-w-[44px]" id="user-menu-button" aria-controls="user-dropdown-menu" aria-haspopup="true" aria-expanded="false">
           {{!-- User initials or avatar --}}
-          <div class="w-8 h-8 rounded-full bg-cyan-700 flex items-center justify-center text-white font-medium">
+          <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-medium">
             {{#if user}}
               {{user.initials}} {{!-- Assuming user object has initials --}}
             {{else}}
               AU {{!-- Anonymous User / Admin User placeholder --}}
             {{/if}}
           </div>
-          <span class="text-gray-300 hidden sm:inline">
+          <span class="text-textSecondary hidden sm:inline">
             {{#if user}}
               {{user.name}} {{!-- Assuming user object has name --}}
             {{else}}
               Admin
             {{/if}}
           </span>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-textSecondary" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
           </svg>
         </button>
         
         <!-- Dropdown menu -->
-        <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg py-1 z-10 hidden" id="user-dropdown-menu" tabindex="-1" role="menu" aria-labelledby="user-menu-button" style="top: 100%;"> {{!-- Position dropdown below button --}}
+        <div class="absolute right-0 mt-2 w-48 bg-cardBackground border border-borderColor rounded-md shadow-lg py-1 z-10 hidden" id="user-dropdown-menu" tabindex="-1" role="menu" aria-labelledby="user-menu-button" style="top: 100%;"> {{!-- Position dropdown below button --}}
           <form action="/logout" method="POST" class="block">
-            <button type="submit" class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" role="menuitem">
+            <button type="submit" class="w-full text-left px-4 py-3 text-sm text-textSecondary hover:bg-background hover:text-textColor transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-accent rounded-md" role="menuitem">
               Sign out
             </button>
           </form>
@@ -86,15 +92,15 @@
 </header>
 
 <!-- Mobile menu (hidden by default) -->
-<nav class="md:hidden bg-gray-800 border-b border-gray-700 hidden" id="mobile-menu" aria-label="Admin mobile navigation">
+<nav class="md:hidden bg-background border-b border-borderColor hidden" id="mobile-menu" aria-label="Admin mobile navigation">
   <div class="container mx-auto px-4 py-3 space-y-1">
-    <a href="/admin/dashboard" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
+    <a href="/admin/dashboard" class="block px-3 py-3 rounded-md text-base font-medium text-textColor hover:bg-cardBackground transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-accent">
       Dashboard
     </a>
-    <a href="/admin/posts" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
+    <a href="/admin/posts" class="block px-3 py-3 rounded-md text-base font-medium text-textColor hover:bg-cardBackground transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-accent">
       Posts
     </a>
-    <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
+    <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-textColor hover:bg-cardBackground transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-accent">
       View Site
     </a>
   </div>
@@ -102,25 +108,25 @@
 
 {{else}}
 <!-- REGULAR USER HEADER -->
-<header class="bg-gray-800 border-b border-gray-700 h-16 flex items-center" role="banner">
+<header class="bg-background border-b border-borderColor h-16 flex items-center" role="banner">
   <div class="container mx-auto px-4 flex items-center justify-between h-full">
     <!-- Logo and main nav-->
     <div class="flex items-center space-x-8 h-full">
-      <a href="/" class="text-2xl font-bold text-white hover:text-gray-200 transition-colors flex items-center min-h-[44px]">
-        Tech<span class="text-cyan-500">Blog</span>
+      <a href="/" class="text-2xl font-bold text-textColor hover:text-textSecondary transition-colors flex items-center min-h-[44px]">
+        Tech<span class="text-primary">Blog</span>
       </a>
       
       <nav aria-label="Main navigation" class="hidden md:block h-full">
         <ul class="flex space-x-6 h-full">
           <li class="flex items-center">
-            <a href="/" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isHomePage}}page{{/if}}">Home</a>
+            <a href="/" class="text-textSecondary hover:text-textColor transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-accent rounded-md" aria-current="{{#if isHomePage}}page{{/if}}">Home</a>
           </li>
           <li class="flex items-center">
-            <a href="/about" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md" aria-current="{{#if isAboutPage}}page{{/if}}">About</a>
+            <a href="/about" class="text-textSecondary hover:text-textColor transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-accent rounded-md" aria-current="{{#if isAboutPage}}page{{/if}}">About</a>
           </li>
           {{#if user}}
             <li class="flex items-center">
-              <a href="/admin/dashboard" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">Dashboard</a>
+              <a href="/admin/dashboard" class="text-textSecondary hover:text-textColor transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-accent rounded-md">Dashboard</a>
             </li>
           {{/if}}
         </ul>
@@ -129,13 +135,19 @@
 
     <!-- User menu -->
     <div class="flex items-center h-full" id="user-menu">
+      <!-- Theme Switcher Button -->
+      <button id="theme-toggle-button" type="button" class="mr-2 p-2 rounded-md text-textSecondary hover:text-textColor focus:outline-none focus:ring-2 focus:ring-accent hover:bg-cardBackground min-h-[44px] min-w-[44px]">
+        <span class="sr-only">Toggle theme</span>
+        <svg id="theme-icon-light" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-15.66l-.707.707M4.04 19.96l-.707.707M21 12h-1M4 12H3m15.66 8.66l-.707-.707M4.04 4.04l-.707-.707" /> </svg>
+        <svg id="theme-icon-dark" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /> </svg>
+      </button>
       <!-- Mobile menu toggle -->
       <button
         type="button"
         id="mobile-menu-toggle"
         aria-controls="mobile-menu"
         aria-expanded="false"
-        class="md:hidden min-h-[44px] min-w-[44px] p-2 rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500">
+        class="md:hidden min-h-[44px] min-w-[44px] p-2 rounded-md text-textSecondary hover:text-textColor focus:outline-none focus:ring-2 focus:ring-accent">
         <span class="sr-only">Open main menu</span>
         <!-- Icon when menu is closed -->
         <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
@@ -150,31 +162,31 @@
       <!-- User profile dropdown -->
       {{#if user}}
         <div class="relative h-full flex items-center">
-          <button class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md px-3 py-2 min-h-[44px] min-w-[44px]" id="user-menu-button" aria-controls="user-dropdown-menu" aria-haspopup="true" aria-expanded="false">
+          <button class="flex items-center space-x-2 focus:outline-none focus:ring-2 focus:ring-accent rounded-md px-3 py-2 min-h-[44px] min-w-[44px]" id="user-menu-button" aria-controls="user-dropdown-menu" aria-haspopup="true" aria-expanded="false">
             {{!-- User initials or avatar --}}
-            <div class="w-8 h-8 rounded-full bg-cyan-700 flex items-center justify-center text-white font-medium">
+            <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-medium">
               {{user.initials}} {{!-- Assuming user object has initials --}}
             </div>
-            <span class="text-gray-300 hidden sm:inline">
+            <span class="text-textSecondary hidden sm:inline">
               {{user.name}} {{!-- Assuming user object has name --}}
             </span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-textSecondary" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
               <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
             </svg>
           </button>
 
           <!-- Dropdown menu -->
           {{!-- Add logout button/link for logged-in users --}}
-          <div class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded-md shadow-lg py-1 z-10 hidden" id="user-dropdown-menu" tabindex="-1" role="menu" aria-labelledby="user-menu-button" style="top: 100%;"> {{!-- Position dropdown below button --}}
+          <div class="absolute right-0 mt-2 w-48 bg-cardBackground border border-borderColor rounded-md shadow-lg py-1 z-10 hidden" id="user-dropdown-menu" tabindex="-1" role="menu" aria-labelledby="user-menu-button" style="top: 100%;"> {{!-- Position dropdown below button --}}
             <form action="/logout" method="POST" class="block">
-              <button role="menuitem" type="submit" class="w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">
+              <button role="menuitem" type="submit" class="w-full text-left px-4 py-3 text-sm text-textSecondary hover:bg-background hover:text-textColor transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-accent rounded-md">
                 Sign out
               </button>
             </form>
           </div>
         </div>
       {{else}}
-        <a href="/login" class="text-gray-300 hover:text-white transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-cyan-500 rounded-md">
+        <a href="/login" class="text-textSecondary hover:text-textColor transition-colors px-3 py-3 min-h-[44px] min-w-[44px] flex items-center focus:outline-none focus:ring-2 focus:ring-accent rounded-md">
         Login</a>
       {{/if}}
     </div>
@@ -182,16 +194,16 @@
 </header>
 
 <!-- Mobile menu (hidden by default) -->
-<nav class="md:hidden bg-gray-800 border-b border-gray-700 hidden" id="mobile-menu" aria-label="Main mobile navigation">
+<nav class="md:hidden bg-background border-b border-borderColor hidden" id="mobile-menu" aria-label="Main mobile navigation">
   <div class="container mx-auto px-4 py-3 space-y-1">
-    <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
+    <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-textColor hover:bg-cardBackground transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-accent">
       Home
     </a>
-    <a href="/about" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
+    <a href="/about" class="block px-3 py-3 rounded-md text-base font-medium text-textColor hover:bg-cardBackground transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-accent">
       About
     </a>
     {{#if user}}
-      <a href="/admin/dashboard" class="block px-3 py-3 rounded-md text-base font-medium text-white hover:bg-gray-700 transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-cyan-500">
+      <a href="/admin/dashboard" class="block px-3 py-3 rounded-md text-base font-medium text-textColor hover:bg-cardBackground transition-colors min-h-[44px] focus:outline-none focus:ring-2 focus:ring-accent">
         Dashboard
       </a>
     {{/if}}

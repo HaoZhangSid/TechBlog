@@ -1,6 +1,27 @@
 @tailwind base;
+
+:root {
+  --color-primary: #22d3ee;
+  --color-background: #ffffff;
+  --color-text-primary: #1f2937;
+  --color-text-secondary: #6b7280;
+  --color-accent: #06b6d4;
+  --color-card-background: #f9fafb;
+  --color-border: #e5e7eb;
+}
+
+html.dark {
+  --color-primary: #059db4;
+  --color-background: #111827;
+  --color-text-primary: #f3f4f6;
+  --color-text-secondary: #9ca3af;
+  --color-accent: #22d3ee;
+  --color-card-background: #1f2937;
+  --color-border: #374151;
+}
+
 @tailwind components;
-@tailwind utilities; 
+@tailwind utilities;
 
 .hljs-comment {
     color: #fff !important;

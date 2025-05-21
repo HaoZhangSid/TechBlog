@@ -1,39 +1,39 @@
 <!-- Hero Banner -->
-<div class="bg-gray-900 text-white">
+<div class="bg-background text-textColor">
   <div class="container mx-auto px-4 py-16 max-w-6xl">
-    <h1 class="text-4xl md:text-5xl font-bold mb-4">Tech<span class="text-cyan-500">Blog</span></h1> {{!-- Updated Name --}}
-    <p class="text-xl text-gray-300 max-w-3xl">Exploring the latest in web development, programming, and technology trends.</p>
+    <h1 class="text-4xl md:text-5xl font-bold mb-4">Tech<span class="text-primary">Blog</span></h1> {{!-- Updated Name --}}
+    <p class="text-xl text-textSecondary max-w-3xl">Exploring the latest in web development, programming, and technology trends.</p>
   </div>
 </div>
 
 <!-- Main Content -->
-<div class="bg-gray-900 text-gray-100 min-h-screen">
+<div class="bg-background text-textColor min-h-screen">
   <div class="container mx-auto px-4 py-12 max-w-6xl">
     <!-- Posts Grid -->
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
       {{#each posts}}
-        <div class="group relative bg-gray-800 rounded-lg overflow-hidden border-2 border-transparent hover:border-cyan-700/50 transition-all duration-300">
+        <div class="group relative bg-cardBackground rounded-lg overflow-hidden border border-borderColor hover:border-primary/50 transition-all duration-300">
           <!-- Subtle gradient overlay that appears on hover -->
-          <div class="absolute inset-0 bg-gradient-to-br from-cyan-900/0 to-cyan-700/0 group-hover:from-cyan-900/10 group-hover:to-cyan-700/20 transition-all duration-300 pointer-events-none"></div>
+          <div class="absolute inset-0 bg-gradient-to-br from-primary/0 to-primary/0 group-hover:from-primary/10 group-hover:to-primary/20 transition-all duration-300 pointer-events-none dark:group-hover:from-primary/20 dark:group-hover:to-primary/30"></div>
           
           <a href="/post/{{slug}}" class="block">
             <!-- Card content with improved hover states -->
             <div class="p-6 relative z-10">
               <!-- Title with smooth color transition -->
-              <h2 class="text-xl font-bold text-white group-hover:text-cyan-300 transition-colors duration-300 mb-2">{{title}}</h2>
+              <h2 class="text-xl font-bold text-textColor group-hover:text-primary transition-colors duration-300 mb-2">{{title}}</h2>
               
               <!-- Date with subtle opacity change -->
-              <div class="text-sm text-gray-400 group-hover:text-gray-300 transition-colors duration-300 mb-4">
+              <div class="text-sm text-textSecondary group-hover:text-textColor transition-colors duration-300 mb-4">
                 <time datetime="{{createdAt}}">{{formatDate createdAt "MMMM D, YYYY"}}</time>
               </div>
               
               <!-- Summary with subtle opacity change and line clamp -->
-              <p class="text-gray-400 group-hover:text-gray-200 transition-colors duration-300 mb-4 line-clamp-3">{{summary}}</p>
+              <p class="text-textSecondary group-hover:text-textColor transition-colors duration-300 mb-4 line-clamp-3">{{summary}}</p>
               
               <!-- Read more link with animated arrow -->
-              <div class="flex items-center text-cyan-500 font-medium">
-                <span class="group-hover:text-cyan-300 transition-colors duration-300">Read more</span>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:ml-2 group-hover:text-cyan-300 transition-all duration-300" viewBox="0 0 20 20" fill="currentColor">
+              <div class="flex items-center text-accent font-medium">
+                <span class="group-hover:text-primary transition-colors duration-300">Read more</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 group-hover:ml-2 group-hover:text-primary transition-all duration-300" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
               </div>
@@ -41,11 +41,11 @@
           </a>
           
           <!-- Subtle bottom highlight -->
-          <div class="h-1 w-full bg-gradient-to-r from-cyan-700/0 via-cyan-500/0 to-cyan-700/0 group-hover:from-cyan-700/40 group-hover:via-cyan-500/40 group-hover:to-cyan-700/40 transition-all duration-300 absolute bottom-0 left-0"></div>
+          <div class="h-1 w-full bg-gradient-to-r from-primary/0 via-primary/0 to-primary/0 group-hover:from-primary/40 group-hover:via-primary/40 group-hover:to-primary/40 transition-all duration-300 absolute bottom-0 left-0"></div>
         </div>
       {{else}}
         <div class="col-span-full text-center py-12">
-          <p class="text-gray-400 text-lg">No posts available yet. Check back soon!</p>
+          <p class="text-textSecondary text-lg">No posts available yet. Check back soon!</p>
         </div>
       {{/each}}
     </div>
@@ -56,7 +56,7 @@
         <ul class="flex items-center space-x-2">
           {{#if pagination.hasPrevPage}}
             <li>
-              <a href="/?page={{pagination.prevPage}}" class="flex items-center justify-center h-10 w-10 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:bg-gray-700 hover:text-cyan-400 transition-colors">
+              <a href="/?page={{pagination.prevPage}}" class="flex items-center justify-center h-10 w-10 rounded-md bg-cardBackground border border-borderColor text-textSecondary hover:bg-background hover:text-primary transition-colors">
                 <span class="sr-only">Previous Page</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -68,11 +68,11 @@
           {{#each pagination.pages}}
             <li>
               {{#if this.isCurrent}}
-                <span class="flex items-center justify-center h-10 w-10 rounded-md bg-cyan-600 text-white font-medium">
+                <span class="flex items-center justify-center h-10 w-10 rounded-md bg-primary text-white font-medium">
                   {{this.number}}
                 </span>
               {{else}}
-                <a href="/?page={{this.number}}" class="flex items-center justify-center h-10 w-10 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:bg-gray-700 hover:text-cyan-400 transition-colors">
+                <a href="/?page={{this.number}}" class="flex items-center justify-center h-10 w-10 rounded-md bg-cardBackground border border-borderColor text-textSecondary hover:bg-background hover:text-primary transition-colors">
                   {{this.number}}
                 </a>
               {{/if}}
@@ -81,7 +81,7 @@
 
           {{#if pagination.hasNextPage}}
             <li>
-              <a href="/?page={{pagination.nextPage}}" class="flex items-center justify-center h-10 w-10 rounded-md bg-gray-800 border border-gray-700 text-gray-300 hover:bg-gray-700 hover:text-cyan-400 transition-colors">
+              <a href="/?page={{pagination.nextPage}}" class="flex items-center justify-center h-10 w-10 rounded-md bg-cardBackground border border-borderColor text-textSecondary hover:bg-background hover:text-primary transition-colors">
                 <span class="sr-only">Next Page</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -93,4 +93,4 @@
       </nav>
     {{/if}}
   </div>
-</div> 
+</div>

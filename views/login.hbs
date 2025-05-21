@@ -1,29 +1,29 @@
-<div class="min-h-screen bg-gray-900 text-gray-100 flex items-center justify-center">
+<div class="min-h-screen bg-background text-textColor flex items-center justify-center">
   <div class="w-full max-w-md px-6 py-12">
     <div class="text-center mb-10">
-      <h1 class="text-4xl font-bold mb-2 text-white">
-        Tech<span class="text-cyan-500">Blog</span> {{!-- Updated Blog Name --}}
+      <h1 class="text-4xl font-bold mb-2 text-textColor">
+        Tech<span class="text-primary">Blog</span> {{!-- Updated Blog Name --}}
       </h1>
-      <p class="text-gray-400">Sign in to access the admin dashboard</p>
+      <p class="text-textSecondary">Sign in to access the admin dashboard</p>
     </div>
     
     <!-- Form-specific error messages (from passport) -->
     {{#if error}}
-      <div class="bg-red-900/50 border border-red-800 text-red-300 px-4 py-3 rounded mb-6" role="alert">
+      <div class="bg-red-500/20 border border-red-700/30 text-red-700 dark:bg-red-500/30 dark:text-red-300 px-4 py-3 rounded mb-6" role="alert">
         <p>{{error}}</p>
       </div>
     {{/if}}
     
     <!-- Login form -->
-    <div class="bg-gray-800 rounded-lg shadow-xl overflow-hidden border border-gray-700">
+    <div class="bg-cardBackground rounded-lg shadow-xl overflow-hidden border border-borderColor">
       <form action="/login" method="POST" class="p-8">
         <div class="mb-6">
-          <label for="email" class="block text-gray-300 text-sm font-medium mb-2">Email</label>
+          <label for="email" class="block text-textSecondary text-sm font-medium mb-2">Email</label>
           <input 
             type="email" 
             id="email" 
             name="email" 
-            class="w-full bg-gray-700 border border-gray-600 rounded-md py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent min-h-[44px]" {{!-- Added min height --}}
+            class="w-full bg-background border border-borderColor rounded-md py-3 px-4 text-textColor placeholder-textSecondary/70 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent min-h-[44px]" {{!-- Added min height --}}
             placeholder="your@email.com"
             required
           >
@@ -31,9 +31,9 @@
         
         <div class="mb-6">
           <div class="flex items-center justify-between mb-2">
-            <label for="password" class="block text-gray-300 text-sm font-medium">Password</label>
+            <label for="password" class="block text-textSecondary text-sm font-medium">Password</label>
             {{!-- Removed forgot password link as it's not implemented in this version --}}
-            <a href="/forgot-password" class="text-sm text-cyan-200 hover:text-cyan-100 underline transition-colors">
+            <a href="/forgot-password" class="text-sm text-accent hover:text-primary underline transition-colors">
               Forgot password?
             </a>
           </div>
@@ -41,7 +41,7 @@
             type="password" 
             id="password" 
             name="password" 
-            class="w-full bg-gray-700 border border-gray-600 rounded-md py-3 px-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent min-h-[44px]" {{!-- Added min height --}}
+            class="w-full bg-background border border-borderColor rounded-md py-3 px-4 text-textColor placeholder-textSecondary/70 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent min-h-[44px]" {{!-- Added min height --}}
             placeholder="••••••••"
             required
           >
@@ -62,7 +62,7 @@
         
         <button 
           type="submit"
-          class="w-full bg-cyan-700 hover:bg-cyan-800 text-white font-medium py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-cyan-500 min-h-[44px]" {{!-- Added min height --}}
+          class="w-full bg-primary hover:bg-accent text-white font-medium py-3 px-4 rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-cardBackground focus:ring-primary min-h-[44px]" {{!-- Added min height --}}
         >
           Sign in
         </button>
@@ -78,7 +78,7 @@
     </div>
     
     <div class="text-center mt-8">
-      <a href="/" class="text-cyan-300 hover:text-cyan-200 underline transition-colors">
+      <a href="/" class="text-accent hover:text-primary underline transition-colors">
         ← Back to blog
       </a>
     </div>
