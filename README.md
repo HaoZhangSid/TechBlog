@@ -129,6 +129,6 @@ This script will create a default admin user if one doesn't already exist with t
 *   `DELETE /api/posts/:id`: Delete an existing post by its ID. Authentication required and only the post's author can delete.
 
 ## Web Accessibility
-We made TechBlog accessible for everyone, following WCAG 2.1 AA. We used semantic HTML (<header>, <nav>, <main>), ARIA attributes (e.g., <a aria-label="Back to all articles">), keyboard-friendly navigation with a “Skip to main content” link, clear form labels, descriptive alt-text for images, and high-contrast colors (4.5:1 ratio). We tested with Chrome Lighthouse, Siteimprove (94/100 score), and NVDA on Windows OS, VoiceOver on MacOS to ensure screen reader compatibility.
+We made TechBlog accessible for everyone, following WCAG 2.1 AA. We used semantic HTML (header, nav, main), ARIA attributes (aria-label="Back to all articles"), keyboard-friendly navigation with a “Skip to main content” link, clear form labels, descriptive alt-text for images, and high-contrast colors (4.5:1 ratio). We tested with Chrome Lighthouse, Siteimprove (94/100 score), and NVDA on Windows OS, VoiceOver on MacOS to ensure screen reader compatibility.
 
 Please [click here](https://techblog-h5axgbbyavc3haat.northeurope-01.azurewebsites.net/accessibility-statement_2025-05-08.html) to see our accessibility statement.
